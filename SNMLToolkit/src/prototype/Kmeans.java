@@ -1,3 +1,4 @@
+/*
 package prototype;
 
 import java.util.ArrayList;
@@ -46,3 +47,4 @@ public class Kmeans {
 		return centers;
 	}
 }
+*/

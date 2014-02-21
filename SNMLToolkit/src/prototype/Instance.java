@@ -56,10 +56,4 @@ public class Instance {
 		return fieldMap.get(fieldIdx);
 	}
 	
-	//define operations?
-	public Instance add(Instance i){
-		Instance sum = new Instance(1);
-		sum.addField("Content", content);
-		return i;
-	}
 }
