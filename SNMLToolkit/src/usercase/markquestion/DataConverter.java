@@ -38,14 +38,19 @@ public class DataConverter {
 			switch(field[1].toLowerCase()){
 			case("int"): 
 				writer.write(String.valueOf(json.getInt(field[0])));
+				break;
 			case("double"):
 				writer.write(String.valueOf(json.getDouble(field[0])));
+				break;
 			case("long"):
 				writer.write(String.valueOf(json.getLong(field[0])));
+				break;
 			case("string"):
 				writer.write("'"+json.getString(field[0])+"'");
+				break;
 			case("date"):
 				writer.write("\""+json.getString(field[0])+"\"");
+				break;
 			default:
 				//TODO: deal with nominal later
 			}
@@ -55,7 +60,7 @@ public class DataConverter {
 			}
 		}
 		
-		writer.write(","+label+"\n");
+		writer.write(label+"\n");
 		
 		writer.flush();
 	}
@@ -110,7 +115,7 @@ public class DataConverter {
 		writer.write(printArffHeader(relation, attributes));
 		writer.flush();
 		
-		BufferedWriter listwriter = new BufferedWriter(new FileWriter(arffFileName+".txt"));
+		BufferedWriter listwriter = new BufferedWriter(new FileWriter(arffFileName+".list"));
 		long k=1;
 		
 		File[] subDirs = dir.listFiles();
