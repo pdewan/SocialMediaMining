@@ -15,8 +15,86 @@ import org.json.JSONObject;
 import weka.core.Attribute;
 import weka.core.Instances;
 import weka.core.Utils;
+import weka.core.converters.ConverterUtils.DataSource;
 
 public class DataConverter {
+	/*
+	//Merge several arff files containing partial attributes of the same dataset
+	// It's user's responsibility to make sure the order of the instances in each file matches
+	// filepaths[] is for attributes, which means if an arff file contains attribute "class"
+	// the attribute would be renamed as filepaths[i]'s name
+	// Set classfilepath to be null or "" to merge unlabeled files
+	// The classfilepath must point to a arff file whose last attribute must be "class"
+	static public Instances mergeArffFiles(
+			String[] filepaths, 
+			String classfilepath) throws Exception{	
+		
+		if(filepaths == null){
+			System.out.println("error in DataConverter.mergeArffFiles"
+					+ "null value of filepaths passed in");
+			return null;
+		}
+		
+
+		int n = filepaths.length;
+		File[] files = new File[n];
+		for(int i=0; i < n; i++){
+			files[i] = new File(filepaths[i]);
+			if(!files[i].isFile() || !filepaths[i].endsWith(".arff")){
+				System.out.println("error in DataConverter.mergeArffFiles: "
+						+filepaths[i]+" is not ARFF file");
+				return null;
+			}
+		}
+		
+		if(classfilepath == null || classfilepath.length() <= 0){
+			return mergeArffFilesWithoutLabel(filepaths);
+		}else{
+			return mergeArffFilesWithLabel(filepaths, classfilepath);
+		}
+	}
+	
+	static private Instances mergeArffFilesWithoutLabel(
+			String[] filepaths) throws Exception{			
+		
+		int n = filepaths.length;
+	
+		DataSource source;
+		Instances[] instances = new Instances[n];		
+		for(int i=0; i < n; i++){
+			source = new DataSource(filepaths[i]);
+			instances[i] = source.getDataSet();
+			
+			for(int j=0; j < instances[i].numAttributes(); j++){
+				Attribute attr;
+				if(instances[i].classIndex() != j){
+					attr = instances[i].attribute(j);
+				}else{
+					attr = instances[i].attribute(j).copy(new File(filepaths[i]).getName());
+				}
+				instances[0].insertAttributeAt(attr, instances[i].numAttributes());
+			}
+		}
+		return instances[0];		
+	}
+		
+	static private Instances mergeArffFilesWithLabel(
+			String[] filepaths, 
+			String classfilepath) throws Exception{	
+		
+		Instances instance = mergeArffFilesWithoutLabel(filepaths);	
+		
+		DataSource source = new DataSource(classfilepath);
+		Instances classInstance = source.getDataSet();		
+		
+		for(int j=0; j < classInstance.numAttributes(); j++){
+			instance.insertAttributeAt(classInstance.attribute(j), classInstance.numAttributes());
+		}		
+		instance.setClassIndex(instance.numAttributes()-1);
+		
+		return instance;		
+	}
+	*/
 	
 	static private void jsonToArffSingleFile(
 			File jsonfile, 
@@ -51,8 +129,12 @@ public class DataConverter {
 			case("date"):
 				writer.write("\""+json.getString(field[0])+"\"");
 				break;
-			default:
-				//TODO: deal with nominal later
+			default: //nomial
+				if(!attributes[i].toLowerCase().contains("class") && 
+						!attributes[i].toLowerCase().contains("dir")){
+					writer.write("'"+json.getString(field[0])+"'");
+				}
+				break;
 			}
 			
 			if(i < attributes.length-1){
@@ -60,8 +142,11 @@ public class DataConverter {
 			}
 		}
 		
-		writer.write(label+"\n");
-		
+		if(attributes[attributes.length-1].toLowerCase().contains("class") || 
+				attributes[attributes.length-1].toLowerCase().contains("dir")){
+			writer.write(label);
+		}
+		writer.write("\n");
 		writer.flush();
 	}
 	
