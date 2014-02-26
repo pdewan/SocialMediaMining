@@ -9,7 +9,7 @@ import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
 
-public class NominalSuperFeatureExtractor implements SuperFeatureExtractor{
+public class NominalSuperFeatureExtractor extends SuperFeatureExtractor{
 	
 	NominalSuperFeatureRule rule = null;
 	
@@ -20,37 +20,20 @@ public class NominalSuperFeatureExtractor implements SuperFeatureExtractor{
 	//example: newfeatureNameAndType = "question? {y, n}"
 	//pass null or "" to savepath if don't want to save
 	public void extract(Instances instances, 
-			String newfeatureNameAndType, 
-			String savepath) throws IOException{
+			String superfeatureNameAndType) throws IOException{
 		
-		String newfeatureName = 
-				newfeatureNameAndType.substring(0, newfeatureNameAndType.indexOf(" "));
-		String newfeatureType = newfeatureNameAndType.substring(newfeatureNameAndType.indexOf("{"));
+		super.extract(instances, superfeatureNameAndType);
 		
-		ArrayList<String> markerList = this.markerList(newfeatureType);		
-		instances.insertAttributeAt(new Attribute(newfeatureName, markerList), instances.numAttributes());
+		ArrayList<String> markerList = this.markerList(superfeatureType);		
+		instances.insertAttributeAt(new Attribute(this.superfeatureName, markerList), instances.numAttributes());
 		
 		int n = instances.size();
 		for(int i=0; i<n; i++){
 			Instance instance = instances.get(i);
 			int k = this.rule.condition(instance);			
 			instance.setValue(instance.numAttributes()-1, markerList.get(k));
-		}
+		}		
 		
-		if(savepath != null && savepath.length()>0){
-			for(int i=0; i < instances.numAttributes(); i++){
-				if(instances.attribute(0).equals(instances.attribute(newfeatureName))){
-					System.out.println(instances.attributeStats(0));
-				}else{
-					instances.deleteAttributeAt(0);
-				}
-			}			
-			
-			FileWriter writer = new FileWriter(savepath);
-			writer.write(instances.toString());
-			writer.flush();
-			writer.close();				
-		}
 	}
 	
 	//add new attribute to save marker

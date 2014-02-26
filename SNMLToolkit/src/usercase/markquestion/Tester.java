@@ -10,20 +10,27 @@ public class Tester {
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-		
-		String[] attributes = {"Content string"};//, "NumComments int", "dir {c1, c2}"};
+		/*
+		String[] attributes = {"Content string", "NumComments int", "dir {c1, c2}"};
 		DataConverter.jsonToArff(
 				"/Users/jinjingma/Documents/workspace/DataCollection/data/politics/content", 
 				"test", attributes, "test");
-		
+		*/
 		DataSource source = new DataSource("test.arff");
 		Instances data = source.getDataSet();
-		System.out.println(data.toString());
-		
+		//System.out.println(data.toString());
+		/*
 		NominalSuperFeatureRule rule = new SubjectHasQuestionRule();
 		NominalSuperFeatureExtractor extractor = new NominalSuperFeatureExtractor(rule);
-		extractor.extract(data, "question? {y, n}", "marked.arff");
-		System.out.println(data.toString());
+		extractor.extract(data, "question? {y, n}");
+		extractor.saveResult(data, "marked.arff");
+		//System.out.println(data.toString());
+		*/
+		NumericalSuperFeatureRule rule2 = new ContentWordNumRule();
+		NumericalSuperFeatureExtractor extractor2 = new NumericalSuperFeatureExtractor(rule2);
+		extractor2.extract(data, "wordnum");
+		extractor2.saveResult(data, "counted.arff");
+		
 		/*
 		Instances data2 = source.getDataSet();
 		marker.mark(data2, "{y, n}", "marked2.arff");
