@@ -124,7 +124,11 @@ public class DataConverter {
 				writer.write(String.valueOf(json.getLong(field[0])));
 				break;
 			case("string"):
-				writer.write("'"+json.getString(field[0])+"'");
+				//TODO: deal with "'" later, now just replace with " ".
+				//TODO: deal with "\n" later, now just replace with " \\n ".
+				String s = json.getString(field[0]).replaceAll("'", "");
+				s = s.replaceAll("\n", " \\n ");
+				writer.write("'"+s+"'");
 				break;
 			case("date"):
 				writer.write("\""+json.getString(field[0])+"\"");
