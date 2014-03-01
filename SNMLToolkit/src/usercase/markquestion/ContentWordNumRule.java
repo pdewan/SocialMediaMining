@@ -4,7 +4,7 @@ import java.util.StringTokenizer;
 
 import weka.core.Instance;
 
-public class ContentWordNumRule implements NumericalSuperFeatureRule {
+public class ContentWordNumRule implements NumericSuperFeatureRule {
 
 	@Override
 	public double condition(Instance instance) {

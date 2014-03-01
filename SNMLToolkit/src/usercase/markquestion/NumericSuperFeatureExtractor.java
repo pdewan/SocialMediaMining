@@ -7,11 +7,11 @@ import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
 
-public class NumericalSuperFeatureExtractor extends SuperFeatureExtractor {
+public class NumericSuperFeatureExtractor extends SuperFeatureExtractor {
 
-	protected NumericalSuperFeatureRule rule;
+	protected NumericSuperFeatureRule rule;
 	
-	public NumericalSuperFeatureExtractor(NumericalSuperFeatureRule rule){
+	public NumericSuperFeatureExtractor(NumericSuperFeatureRule rule){
 		this.rule = rule;
 	}
 

@@ -1,9 +1,10 @@
 package usercase.markquestion;
 
-import java.io.FileWriter;
+import java.io.File;
 import java.io.IOException;
 
 import weka.core.Instances;
+import weka.core.converters.ArffSaver;
 
 public abstract class SuperFeatureExtractor {
 
@@ -36,10 +37,15 @@ public abstract class SuperFeatureExtractor {
 				}
 			}			
 			
+		ArffSaver saver = new ArffSaver();
+		saver.setInstances(instances);
+		saver.setFile(new File(savepath));
+		saver.writeBatch();
+		/*
 			FileWriter writer = new FileWriter(savepath);
 			writer.write(instances.toString());
 			writer.flush();
 			writer.close();				
-		
+		*/
 	}
 }
