@@ -12,7 +12,12 @@ public class YahooAnswersDataConfig extends JsonDataConfig{
 	public static String USERID				= "UserId";
 	public static String USERNICK 			= "UserNick";
 	
-	public void initFieldType(){
+	public YahooAnswersDataConfig(){
+		super();
+	}
+	
+	@Override
+	protected void initFieldType(){
 		super.initFieldType();
 		
 		FIELDTYPE.put(CONTENT, s);

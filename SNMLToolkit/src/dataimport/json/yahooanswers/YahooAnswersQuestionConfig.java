@@ -20,9 +20,11 @@ public class YahooAnswersQuestionConfig extends YahooAnswersDataConfig{
 	public static String ANSWERS			= "Answers";	
 	public static String COMMENTS			= "Comments";
 	
+	public YahooAnswersQuestionConfig(){
+		super();
+	}
 	
-	
-	public void initFieldType(){
+	protected void initFieldType(){
 		super.initFieldType();
 	
 		FIELDTYPE.put(ID, s);
@@ -30,7 +32,7 @@ public class YahooAnswersQuestionConfig extends YahooAnswersDataConfig{
 		FIELDTYPE.put(SUBJECT, s);
 		
 		//TODO: handle Category, it's JSONObject / nominal
-		FIELDTYPE.put(CATEGORY, null);
+		FIELDTYPE.put(CATEGORY, j);
 		
 		FIELDTYPE.put(NUMANSWERS, i);
 		FIELDTYPE.put(NUMCOMMENTS, i);
@@ -42,10 +44,10 @@ public class YahooAnswersQuestionConfig extends YahooAnswersDataConfig{
 		FIELDTYPE.put(CHOSENANSWERAWARDTIMESTAMP, l);
 		
 		//TODO: handle Answers later, it's JSONObject contains JSONArray
-		FIELDTYPE.put(ANSWERS, null);
+		FIELDTYPE.put(ANSWERS, j);
 		
 		//TODO: handle Comments later, haven't seen any question containing it
-		FIELDTYPE.put(COMMENTS, null);
+		FIELDTYPE.put(COMMENTS, j);
 		
 	}
 

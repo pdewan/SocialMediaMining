@@ -1,8 +1,14 @@
 package usercase.markquestion;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Random;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import dataimport.json.yahooanswers.YahooAnswersQuestionConfig;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.classifiers.Evaluation;
@@ -12,16 +18,52 @@ import weka.gui.explorer.ClassifierPanel;
 public class Tester {
 
 	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
 		/*
-		String[] attributes = {"NumAnswers int"};
-		DataConverter.jsonToArff(
+		BufferedReader reader = new BufferedReader(new FileReader(
+				"/Users/jinjingma/Documents/workspace/DataCollection/data/politics/content/c1/20140115093554AAclerh.txt"));
+		StringBuilder sb = new StringBuilder();
+		String line;
+		while((line=reader.readLine())!=null){
+			sb.append(line);
+		}
+		
+		JSONObject json = new JSONObject(sb.toString());
+		Object n = json.get("NumComments");
+		String a = json.getString("Answers");
+		if(n instanceof String){
+			System.out.println(n);
+			System.out.println(a);
+		}
+		/*
+		if(a instanceof JSONObject){
+			Object b = ((JSONObject) a).get("Answer");
+			if(b instanceof JSONArray){
+				System.out.println(b + "true");
+			}
+		}
+		*/
+		
+		// TODO Auto-generated method stub
+		
+		String[] attributes = {"NumAnswers", "Answers"};
+		YahooAnswersQuestionConfig config = new YahooAnswersQuestionConfig();
+		YahooAnswersJsonToArffDataConverter converter = 
+				new YahooAnswersJsonToArffDataConverter(config);
+		converter.jsonToArff(
 				"/Users/jinjingma/Documents/workspace/DataCollection/data/politics/content", 
 				"test", attributes, "test");
 		/*
+		BufferedReader reader = new BufferedReader(new FileReader(
+				"test.arff"));
+		String line;
+		while((line=reader.readLine())!=null){
+			System.out.println(line);
+		}
+		*/
+		
 		DataSource source = new DataSource("test.arff");
 		Instances data = source.getDataSet();
-		
+		/*
 		NominalSuperFeatureRule rule = new SubjectHasQuestionRule();
 		NominalSuperFeatureExtractor extractor = new NominalSuperFeatureExtractor(rule);
 		extractor.extract(data, "question? {y, n}");
@@ -49,6 +91,8 @@ public class Tester {
 		
 		testPrediction.setClassIndex(testPrediction.numAttributes()-1);
 		*/
+		
+		/*
 		DataSource source3 = new DataSource("weather.numeric.arff");
 		Instances testPrediction = source3.getDataSet();
 		testPrediction.setClassIndex(testPrediction.numAttributes()-1);
@@ -77,7 +121,7 @@ public class Tester {
 		 eval.evaluateModel(model, test);
 		 System.out.println(eval.toSummaryString("\nResults\n======\n", false));
 		
-		
+		*/
 		
 		//double c[] = model.coefficients();
 		

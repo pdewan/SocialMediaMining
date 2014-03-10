@@ -24,13 +24,13 @@ import weka.core.converters.ConverterUtils.DataSource;
 public class YahooAnswersJsonToArffDataConverter {
 	
 	JsonDataConfig dataConfig;
-	List<JsonArrayFeatureExtractor> answersFeatureExtractor;
+	//List<JsonArrayFeatureExtractor> answersFeatureExtractor;
 	
 	public YahooAnswersJsonToArffDataConverter(
-			JsonDataConfig config,
-			List<JsonArrayFeatureExtractor> featureExtractors){
+			JsonDataConfig config//,
+		/*	List<JsonArrayFeatureExtractor> featureExtractors*/){
 		this.dataConfig = config;
-		this.answersFeatureExtractor = featureExtractors;
+		//this.answersFeatureExtractor = featureExtractors;
 	}
 	
 	// example: attributes = {"Comment", "NumAnswers"}, or {QuestionConfig.COMMENT, QuestionConfig.NUMANSWERS}
@@ -61,6 +61,13 @@ public class YahooAnswersJsonToArffDataConverter {
 		
 		for(int i=0; i < attributes.length; i++){			
 			
+			Object fieldValue = json.get(attributes[i]);
+			if(fieldValue instanceof JSONObject ||
+					fieldValue instanceof JSONArray){
+				
+			}
+			
+			/*
 			if(attributes[i].equals("Answers")){
 				JSONArray answers = json.getJSONArray("Answers");
 				for(int k=0; k<answersFeatureExtractor.size(); k++){
@@ -69,8 +76,9 @@ public class YahooAnswersJsonToArffDataConverter {
 				}
 				continue;
 			}			
+			*/
 			
-			String type = dataConfig.FIELDTYPE.get(attributes[i]);
+			String type = dataConfig.getFieldType(attributes[i]);
 			if(type==null){
 				System.out.println("error in JsonToArffDataConverter.convertSingleFile: attribute " +
 										attributes[i] + "unsupported");
@@ -93,6 +101,13 @@ public class YahooAnswersJsonToArffDataConverter {
 				String s = json.getString(attributes[i]).replaceAll("'", "");
 				s = s.replaceAll("\n", " \\n ");
 				writer.write("'"+s+"'");
+				break;
+			case("JSONStructure"):
+				Object o = json.get(attributes[i]);
+				String os = o.toString();
+				os = os.replaceAll("'", "");
+				os = os.replaceAll("\n", " \\n ");
+				writer.write("'"+os+"'");
 				break;
 			case("date"):
 				writer.write("\""+json.getString(attributes[i])+"\"");
@@ -127,23 +142,26 @@ public class YahooAnswersJsonToArffDataConverter {
 			append(relation).append("\n\n");
 		
 		for(int i=0; i < attributes.length; i ++){
+			/*
 			if(attributes[i].equals("Answers")){				
 				for(int k=0; k<answersFeatureExtractor.size(); k++){
 					text.append(Attribute.ARFF_ATTRIBUTE).append(" ");
 					text.append(answersFeatureExtractor.get(k).featureName).append(" ");
 					text.append("numeric");
 				}
-			}else{						
+			}else{	*/					
 				text.append(Attribute.ARFF_ATTRIBUTE).append(" ");
-				text.append(attributes[i].substring(0, attributes[i].indexOf(" "))).append(" ");
+				text.append(attributes[i]).append(" ");
 				
-				String fieldType = attributes[i].substring(attributes[i].indexOf(" ")+1).toLowerCase();		
+				String fieldType = this.dataConfig.getFieldType(attributes[i]);
 				if(fieldType.equals("int") || fieldType.equals("double") || fieldType.equals("long")){
 					text.append("numeric");
+				}else if(fieldType.equals("JSONStructure")){
+					text.append("string");
 				}else{
-					text.append(attributes[i].substring(attributes[i].indexOf(" ")+1));
+					text.append(fieldType);
 				}
-			}
+			//}
 			text.append("\n");			
 		}
 		text.append("\n");
@@ -164,18 +182,15 @@ public class YahooAnswersJsonToArffDataConverter {
 			System.out.println("path is not for data directory");
 			return;
 		}
-		for(int i=0; i < attributes.length; i ++){
-			if(!attributes[i].contains(" ")){
-				System.out.println("wrong attribute input");
-				return;
-			}
+		/*
+		for(int i=0; i < attributes.length; i ++){					
 			if(attributes[i].equals("Answers") && answersFeatureExtractor == null){
 				System.out.println("error in YahooAnswersJsonToArffDataConverter: "
 						+ "no feature extractor for JSONArray 'Answers'");
 				return;
 			}
 		}
-		
+		*/
 		
 		BufferedWriter writer = new BufferedWriter(new FileWriter(arffFileName+".arff"));
 		writer.write(printArffHeader(relation, attributes));
