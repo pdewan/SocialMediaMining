@@ -8,6 +8,7 @@ import java.util.Random;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import dataimport.email.EmailThreadParser;
 import dataimport.json.yahooanswers.YahooAnswersQuestionConfig;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
@@ -18,33 +19,12 @@ import weka.gui.explorer.ClassifierPanel;
 public class Tester {
 
 	public static void main(String[] args) throws Exception {
-		/*
-		BufferedReader reader = new BufferedReader(new FileReader(
-				"/Users/jinjingma/Documents/workspace/DataCollection/data/politics/content/c1/20140115093554AAclerh.txt"));
-		StringBuilder sb = new StringBuilder();
-		String line;
-		while((line=reader.readLine())!=null){
-			sb.append(line);
-		}
 		
-		JSONObject json = new JSONObject(sb.toString());
-		Object n = json.get("NumComments");
-		String a = json.getString("Answers");
-		if(n instanceof String){
-			System.out.println(n);
-			System.out.println(a);
-		}
-		/*
-		if(a instanceof JSONObject){
-			Object b = ((JSONObject) a).get("Answer");
-			if(b instanceof JSONArray){
-				System.out.println(b + "true");
-			}
-		}
-		*/
+		EmailThreadParser emailParser = new EmailThreadParser();
+		emailParser.parse("subjects.txt", "attachments.txt", "messages.txt");
 		
 		// TODO Auto-generated method stub
-		
+		/*
 		String[] attributes = {"NumAnswers", "Answers"};
 		YahooAnswersQuestionConfig config = new YahooAnswersQuestionConfig();
 		YahooAnswersJsonToArffDataConverter converter = 
@@ -60,7 +40,7 @@ public class Tester {
 			System.out.println(line);
 		}
 		*/
-		
+		/*
 		DataSource source = new DataSource("test.arff");
 		Instances data = source.getDataSet();
 		/*
