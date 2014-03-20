@@ -22,33 +22,29 @@ public class YahooAnswersQuestionConfig extends YahooAnswersDataConfig{
 	
 	public YahooAnswersQuestionConfig(){
 		super();
-	}
-	
-	protected void initFieldType(){
-		super.initFieldType();
-	
-		FIELDTYPE.put(ID, s);
-		FIELDTYPE.put(TYPE, "{Open, Answered, Deleted}");
-		FIELDTYPE.put(SUBJECT, s);
+		
+		attributeTypes.put(ID, s);
+		attributeTypes.put(TYPE, "{Open, Answered, Deleted}");
+		attributeTypes.put(SUBJECT, s);
 		
 		//TODO: handle Category, it's JSONObject / nominal
-		FIELDTYPE.put(CATEGORY, j);
+		attributeTypes.put(CATEGORY, j);
 		
-		FIELDTYPE.put(NUMANSWERS, i);
-		FIELDTYPE.put(NUMCOMMENTS, i);
+		attributeTypes.put(NUMANSWERS, i);
+		attributeTypes.put(NUMCOMMENTS, i);
 		
-		FIELDTYPE.put(CHOSENANSWER, s);
-		FIELDTYPE.put(CHOSENANSWERID, s);
-		FIELDTYPE.put(CHOSENANSWERNICK, s);
-		FIELDTYPE.put(CHOSENANSWERTIMESTAMP, l);
-		FIELDTYPE.put(CHOSENANSWERAWARDTIMESTAMP, l);
+		attributeTypes.put(CHOSENANSWER, s);
+		attributeTypes.put(CHOSENANSWERID, s);
+		attributeTypes.put(CHOSENANSWERNICK, s);
+		attributeTypes.put(CHOSENANSWERTIMESTAMP, l);
+		attributeTypes.put(CHOSENANSWERAWARDTIMESTAMP, l);
 		
 		//TODO: handle Answers later, it's JSONObject contains JSONArray
-		FIELDTYPE.put(ANSWERS, j);
+		attributeTypes.put(ANSWERS, j);
 		
 		//TODO: handle Comments later, haven't seen any question containing it
-		FIELDTYPE.put(COMMENTS, j);
-		
+		attributeTypes.put(COMMENTS, j);
 	}
+	
 
 }

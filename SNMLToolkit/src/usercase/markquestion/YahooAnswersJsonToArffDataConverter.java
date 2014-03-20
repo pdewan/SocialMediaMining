@@ -78,7 +78,7 @@ public class YahooAnswersJsonToArffDataConverter {
 			}			
 			*/
 			
-			String type = dataConfig.getFieldType(attributes[i]);
+			String type = dataConfig.getAttributeType(attributes[i]);
 			if(type==null){
 				System.out.println("error in JsonToArffDataConverter.convertSingleFile: attribute " +
 										attributes[i] + "unsupported");
@@ -124,6 +124,7 @@ public class YahooAnswersJsonToArffDataConverter {
 				writer.write(",");
 			}
 		}
+		reader.close();
 		
 		if(attributes[attributes.length-1].toLowerCase().contains("class") || 
 				attributes[attributes.length-1].toLowerCase().contains("dir")){
@@ -153,7 +154,7 @@ public class YahooAnswersJsonToArffDataConverter {
 				text.append(Attribute.ARFF_ATTRIBUTE).append(" ");
 				text.append(attributes[i]).append(" ");
 				
-				String fieldType = this.dataConfig.getFieldType(attributes[i]);
+				String fieldType = this.dataConfig.getAttributeType(attributes[i]);
 				if(fieldType.equals("int") || fieldType.equals("double") || fieldType.equals("long")){
 					text.append("numeric");
 				}else if(fieldType.equals("JSONStructure")){

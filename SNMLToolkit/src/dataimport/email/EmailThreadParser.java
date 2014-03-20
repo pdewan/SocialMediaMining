@@ -58,7 +58,7 @@ public class EmailThreadParser {
 			int msgId = scanner.nextInt();
 			
 			String tmp = scanner.next();		
-			int attachNum = Integer.parseInt(tmp.substring("Num_Attachments:".length()));
+			double attachNum = Double.parseDouble(tmp.substring("Num_Attachments:".length()));
 					
 			String[] attachments = null;
 			if(attachNum>0){	
@@ -144,7 +144,7 @@ public class EmailThreadParser {
 			msg.addAttribute(EmailDataConfig.TIMEZONE, timezone);	
 						
 			retriever.sortMsgIntoThread(msg);
-			System.out.println(retriever.targetThreadDataSet.getThreadData(threadId).msgDatas.toString());
+			//System.out.println(retriever.targetThreadDataSet.getThreadData(threadId).msgDatas.toString());
 		}
 		reader.close();
 		
@@ -159,6 +159,7 @@ public class EmailThreadParser {
 		File msgSubjectInfo = new File(msgSubjectInfoPath);
 		File msgAttachInfo = new File(msgAttachInfoPath);
 		File threadInfo = new File(threadInfoPath);
+		/*
 		if(!msgSubjectInfo.exists()){
 			System.out.println("Error in EmailThreadParser.parse: "
 					+ "file "+msgSubjectInfoPath +" does not exist");
@@ -174,6 +175,7 @@ public class EmailThreadParser {
 					+ "file "+threadInfoPath +" does not exist");
 			return null;
 		}
+		*/
 		
 		 ArrayList<MessageData> msgs = new  ArrayList<MessageData>();
 		 this.parseMsgSubjectInfo(msgSubjectInfo, msgs);

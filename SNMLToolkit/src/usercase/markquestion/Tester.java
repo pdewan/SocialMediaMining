@@ -1,16 +1,28 @@
 package usercase.markquestion;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import dataconvert.FeatureExtractor;
+import dataconvert.FlattenedThreadDataSet;
+import dataconvert.rule.BasicFeatureRule;
+import dataconvert.rule.DateBasicFeatureRule;
+import dataconvert.rule.FeatureRule;
+import dataconvert.rule.NumericBasicFeatureRule;
+import dataimport.ThreadDataSet;
+import dataimport.email.EmailDataConfig;
 import dataimport.email.EmailThreadParser;
 import dataimport.json.yahooanswers.YahooAnswersQuestionConfig;
+import weka.core.Attribute;
 import weka.core.Instances;
+import weka.core.converters.ArffSaver;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.classifiers.Evaluation;
 import weka.classifiers.functions.LinearRegression;
@@ -21,7 +33,22 @@ public class Tester {
 	public static void main(String[] args) throws Exception {
 		
 		EmailThreadParser emailParser = new EmailThreadParser();
-		emailParser.parse("subjects.txt", "attachments.txt", "messages.txt");
+		ThreadDataSet threads = emailParser.parse("subjects.txt", "attachments.txt", "messages.txt");
+			
+		
+		FeatureExtractor extractor = new FeatureExtractor();
+		Instances destDataSet = extractor.newDestDataSet(threads.size(), "testDest");
+		FeatureRule[] rules = new FeatureRule[2];
+		rules[0] = new DateBasicFeatureRule("startDate", "Date", BasicFeatureRule.ACCENDING, 0);
+		rules[1] = new NumericBasicFeatureRule("attatchNum", EmailDataConfig.ATTACHMENT_NUM, BasicFeatureRule.ACCENDING, 0);
+		extractor.extract(threads, destDataSet, "test", rules);
+		
+		ArffSaver saver = new ArffSaver();
+		saver.setInstances(destDataSet);
+		saver.setFile(new File("./data/newtest.arff"));
+		saver.writeBatch();
+		
+		System.out.println(destDataSet.toString());
 		
 		// TODO Auto-generated method stub
 		/*
