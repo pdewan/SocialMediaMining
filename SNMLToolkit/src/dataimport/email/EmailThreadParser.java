@@ -92,7 +92,7 @@ public class EmailThreadParser {
 	public ThreadDataSet parseThreadInfo(File threadInfoFile, ArrayList<MessageData> msgs) throws IOException, ParseException{
 		ThreadRetriever retriever = new ThreadRetriever();
 		SimpleDateFormat oriDateFormat = new SimpleDateFormat("MMM dd HH:mm:ss yyyy");
-		SimpleDateFormat destDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat destDateFormat = new SimpleDateFormat(EmailDataConfig.DATEFORMAT);
 		
 		BufferedReader reader = new BufferedReader(new FileReader(threadInfoFile));
 		String line;

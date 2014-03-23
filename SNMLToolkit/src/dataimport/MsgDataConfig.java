@@ -8,7 +8,7 @@ public abstract class MsgDataConfig {
 	protected static String i 	= "int";
 	protected static String l 	= "long";
 	protected static String d 	= "double";
-	protected static String dateFormat 	= "date \"yyyy-MM-dd HH:mm:ss\"";
+	public static String DATEFORMAT 	= "yyyy-MM-dd HH:mm:ss";
 	
 	protected HashMap<String, String> attributeTypes;
 	
@@ -18,7 +18,7 @@ public abstract class MsgDataConfig {
 	public MsgDataConfig(){
 		attributeTypes = new HashMap<String, String>();
 		attributeTypes.put(THREADID, i);
-		attributeTypes.put(DATE, dateFormat);
+		attributeTypes.put(DATE, DATEFORMAT);
 	}
 	
 	public String getAttributeType(String attributeName){

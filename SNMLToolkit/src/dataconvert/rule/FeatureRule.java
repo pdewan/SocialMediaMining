@@ -7,8 +7,8 @@ public abstract class FeatureRule {
 	
 	protected String destFeatureName;	
 	
-	public FeatureRule(String aName){
-		this.destFeatureName = aName;
+	public FeatureRule(String destFeatureName){
+		this.destFeatureName = destFeatureName;
 	}
 	
 	public String getDestFeatureName(){

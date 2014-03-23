@@ -1,10 +1,24 @@
 package dataimport;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ThreadDataSet {
 	protected ArrayList<ThreadData> threads;
 	
+	@Override
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		
+		for(int i=0; i<threads.size(); i++){
+			if(threads.get(i)!=null){ 
+				sb.append(threads.get(i).toString());
+			}
+			sb.append("\n");
+		}
+		
+		return sb.toString();
+	}
 	//thread id must be integer
 	public ThreadDataSet(){
 		threads = new ArrayList<ThreadData>();

@@ -1,4 +1,4 @@
-package dataconvert.rule;
+package dataconvert.rule.util.basic;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

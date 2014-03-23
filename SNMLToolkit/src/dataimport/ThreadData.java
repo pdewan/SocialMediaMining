@@ -14,6 +14,18 @@ public class ThreadData {
 	 * 	Sorted by date&time
 	 */
 	public TreeSet<MessageData> msgDatas;
+	
+	@Override
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		Iterator<MessageData> iter = msgDatas.iterator();
+		while(iter.hasNext()){
+			sb.append(iter.next().getAttribute("Date")).append(", ");
+		}
+		sb.append("]");
+		return sb.toString();
+	}
 		
 	public ThreadData(){
 		msgDatas = new TreeSet<MessageData>(new Comparator<MessageData>(){
@@ -26,12 +38,16 @@ public class ThreadData {
             	
             	String dateA = (String)dateObjA;
             	String dateB = (String)dateObjB;
-            	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            	SimpleDateFormat dateFormat = new SimpleDateFormat(MsgDataConfig.DATEFORMAT);
             	
 				try {
 					Date dA = dateFormat.parse(dateA);
 					Date dB = dateFormat.parse(dateB);
-	            	return dA.compareTo(dB);
+					
+					int cmp = dA.compareTo(dB);
+					if(cmp==0) cmp = 1;
+	            	return cmp;
+	            	
 				} catch (ParseException e) {
 					e.printStackTrace();
 					return 0;

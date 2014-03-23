@@ -1,10 +1,11 @@
-package dataconvert.rule;
+package dataconvert.rule.util.basic;
 
 import weka.core.Instance;
+import dataconvert.rule.FeatureRule;
 import dataimport.MessageData;
 import dataimport.ThreadData;
 
-public abstract class BasicFeatureRule extends FeatureRule{	
+public class BasicFeatureRule extends FeatureRule{	
 	protected int k;
 	protected int inOrder;
 	protected String attrName;
@@ -59,6 +60,12 @@ public abstract class BasicFeatureRule extends FeatureRule{
 	public Object extract(Instance anInstance) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void checkValid(Object val) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

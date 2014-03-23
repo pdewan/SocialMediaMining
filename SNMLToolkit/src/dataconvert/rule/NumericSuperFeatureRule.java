@@ -16,8 +16,11 @@ public abstract class NumericSuperFeatureRule extends FeatureRule{
 		}
 		*/
 		
-		if(!(val instanceof Double)){
-			throw new Exception("This attr value must be double");
+		if(!(val instanceof Double || val instanceof Integer)){
+			throw new Exception("This attr value must be double/int");
+		}
+		if(val instanceof Integer){
+			val = new Double(((Integer) val).doubleValue());
 		}
 	}
 

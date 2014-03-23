@@ -1,4 +1,5 @@
-package dataconvert.rule;
+package dataconvert.rule.util.basic;
+
 
 public class NumericBasicFeatureRule extends BasicFeatureRule {
 
