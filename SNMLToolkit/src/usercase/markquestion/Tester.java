@@ -24,16 +24,20 @@ public class Tester {
 		
 		
 		
-		FeatureRule[] rules = new FeatureRule[3];
-		rules[0] = new DateBasicFeatureRule("startDate", "Date", BasicFeatureRule.ACCENDING, 0);
-		rules[1] = new NumericBasicFeatureRule("attatchNum", EmailDataConfig.ATTACHMENT_NUM, BasicFeatureRule.ACCENDING, 0);
-		String[] hasThese = {"Fwd"};
-		rules[2] = new TextBinaryFeatureRule("isFwd", null, EmailDataConfig.SUBJECT, hasThese);
+		FeatureRule[] rules1 = new FeatureRule[2];
+		rules1[0] = new DateBasicFeatureRule("startDate", "Date", BasicFeatureRule.ACCENDING, 0);
+		rules1[1] = new NumericBasicFeatureRule("attatchNum", EmailDataConfig.ATTACHMENT_NUM, BasicFeatureRule.ACCENDING, 0);
+		
+		FeatureRule[] rules2 = new FeatureRule[1];
+		String[] hasThese = {"Fwd"};		
+		rules2[0] = new TextBinaryFeatureRule("isFwd", null, EmailDataConfig.SUBJECT, hasThese);
 		
 		FeatureExtractor extractor = new WekaFeatureExtractor();
-		IntermediateDataSet destDataSet = extractor.extract(threads, "test", rules);
+		IntermediateDataSet destDataSet1 = extractor.extract(threads, "test", rules1);
+		IntermediateDataSet destDataSet2 = extractor.extract(threads, "test2", rules2);
+		IntermediateDataSet destDataSet = destDataSet2.merge(destDataSet1);
 		
-		destDataSet.save("testIntermediate.arff");
+		//destDataSet1.save("testIntermediate.arff");
 		
 		System.out.println(destDataSet.toString());
 		

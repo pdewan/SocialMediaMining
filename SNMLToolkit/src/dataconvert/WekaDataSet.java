@@ -11,7 +11,7 @@ import weka.core.converters.CSVSaver;
 
 public class WekaDataSet implements IntermediateDataSet {
 
-	Instances dataset;
+	protected Instances dataset;
 	
 	public WekaDataSet(String datasetName, int capacity){
 		dataset = new Instances(datasetName, new ArrayList<Attribute>(), capacity);	
@@ -19,6 +19,10 @@ public class WekaDataSet implements IntermediateDataSet {
 	
 	public WekaDataSet(Instances dataset){
 		this.dataset = dataset;
+	}
+	
+	public Instances getDataSet(){
+		return dataset;
 	}
 	
 	@Override
@@ -59,6 +63,16 @@ public class WekaDataSet implements IntermediateDataSet {
 	@Override
 	public String toString(){
 		return dataset.toString();
+	}
+
+	@Override
+	public IntermediateDataSet merge(IntermediateDataSet anotherDataSet) throws Exception {
+		if(!(anotherDataSet instanceof WekaDataSet)){
+			throw new Exception("uncampatible dataset type");
+		}
+		
+		Instances insts = Instances.mergeInstances(dataset, ((WekaDataSet)anotherDataSet).getDataSet());
+		return new WekaDataSet(insts);
 	}
 
 }
