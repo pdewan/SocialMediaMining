@@ -1,10 +1,9 @@
-package dataconvert.rule.util;
+package dataconvert.rule.basicfeature;
 
-import weka.core.Instance;
-import dataconvert.rule.NumericSuperFeatureRule;
+import dataconvert.rule.NumericFeatureRule;
 import dataimport.ThreadData;
 
-public class FollowMessageNumRule extends NumericSuperFeatureRule {
+public class FollowMessageNumRule extends NumericFeatureRule implements IBasicFeatureRule{
 
 	public FollowMessageNumRule(String destFeatureName) {
 		super(destFeatureName);
@@ -18,12 +17,6 @@ public class FollowMessageNumRule extends NumericSuperFeatureRule {
 		double msgNum = aThread.size();	
 		
 		return msgNum-1;
-	}
-
-	@Override
-	public Object extract(Instance anInstance) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

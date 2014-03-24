@@ -4,21 +4,24 @@ import java.util.ArrayList;
 
 import weka.core.Attribute;
 import weka.core.Instances;
-import dataconvert.rule.DateSuperFeatureRule;
-import dataconvert.rule.FeatureRule;
-import dataconvert.rule.NominalSuperFeatureRule;
-import dataconvert.rule.NumericSuperFeatureRule;
-import dataconvert.rule.NumericVectorSuperFeatureRule;
-import dataconvert.rule.util.basic.DateBasicFeatureRule;
-import dataconvert.rule.util.basic.NominalBasicFeatureRule;
-import dataconvert.rule.util.basic.NumericBasicFeatureRule;
+import dataconvert.rule.DateFeatureRule;
+import dataconvert.rule.NominalFeatureRule;
+import dataconvert.rule.NumericFeatureRule;
+import dataconvert.rule.basicfeature.IBasicFeatureRule;
+import dataconvert.rule.superfeature.DateSuperFeatureRule;
+import dataconvert.rule.superfeature.NominalSuperFeatureRule;
+import dataconvert.rule.superfeature.NumericSuperFeatureRule;
+import dataconvert.rule.superfeature.NumericVectorSuperFeatureRule;
+import dataconvert.rule.util.rawfeature.DateRawFeatureRule;
+import dataconvert.rule.util.rawfeature.NominalRawFeatureRule;
+import dataconvert.rule.util.rawfeature.NumericRawFeatureRule;
 import dataimport.MsgDataConfig;
 
 public class WekaFeatureExtractor extends FeatureExtractor {
 
 	@Override
 	public IntermediateDataSet initDestDataSet(String destDataSetName,
-			int threadNum, FeatureRule[] rules) throws Exception {
+			int threadNum, IBasicFeatureRule[] rules) throws Exception {
 		
 		ArrayList<Attribute> attributes = new ArrayList<Attribute>(rules.length);
 		for(int i=0; i<rules.length; i++){
@@ -33,22 +36,14 @@ public class WekaFeatureExtractor extends FeatureExtractor {
 			else{
 				Attribute attr;
 			
-				if(rules[i] instanceof DateBasicFeatureRule || 
-						rules[i] instanceof DateSuperFeatureRule){
+				if(rules[i] instanceof DateFeatureRule){
 					attr = new Attribute(rules[i].getDestFeatureName(), MsgDataConfig.DATEFORMAT);
 				}
-				else if(rules[i] instanceof NumericBasicFeatureRule || 
-						rules[i] instanceof NumericSuperFeatureRule){
+				else if(rules[i] instanceof NumericFeatureRule){
 					attr = new Attribute(rules[i].getDestFeatureName());
 				}
-				else if(rules[i] instanceof NominalBasicFeatureRule || 
-						rules[i] instanceof NominalSuperFeatureRule){
-					ArrayList<String> domain;
-					if(rules[i] instanceof NominalBasicFeatureRule){
-						domain = ((NominalBasicFeatureRule)rules[i]).getDomain();
-					}else{
-						domain = ((NominalSuperFeatureRule)rules[i]).getDomain();
-					}
+				else if(rules[i] instanceof NominalFeatureRule){
+					ArrayList<String> domain = ((NominalFeatureRule)rules[i]).getDomain();
 					attr = new Attribute(rules[i].getDestFeatureName(), domain);
 				}
 				else{
@@ -74,8 +69,11 @@ public class WekaFeatureExtractor extends FeatureExtractor {
 	}
 
 	@Override
-	public IntermediateData initADataInstance(FeatureRule[] rules) {
+	public IntermediateData initADataInstance(
+			IntermediateDataSet relatedDataset, IBasicFeatureRule[] rules) {
+		
 		WekaData inst = new WekaData(rules.length);
+		inst.setRelatedDataset((WekaDataSet)relatedDataset);
 		return inst;
 	}
 

@@ -4,11 +4,14 @@ package usercase.markquestion;
 import dataconvert.FeatureExtractor;
 import dataconvert.IntermediateDataSet;
 import dataconvert.WekaFeatureExtractor;
-import dataconvert.rule.FeatureRule;
-import dataconvert.rule.util.TextBinaryFeatureRule;
-import dataconvert.rule.util.basic.BasicFeatureRule;
-import dataconvert.rule.util.basic.DateBasicFeatureRule;
-import dataconvert.rule.util.basic.NumericBasicFeatureRule;
+import dataconvert.rule.basicfeature.IBasicFeatureRule;
+import dataconvert.rule.superfeature.ClusterModelRule;
+import dataconvert.rule.superfeature.ISuperFeatureRule;
+import dataconvert.rule.basicfeature.TextBinaryFeatureRule;
+import dataconvert.rule.util.rawfeature.DateRawFeatureRule;
+import dataconvert.rule.util.rawfeature.NumericRawFeatureRule;
+import dataconvert.rule.util.rawfeature.RawFeatureRule;
+import dataimport.MsgDataConfig;
 import dataimport.ThreadDataSet;
 import dataimport.email.EmailDataConfig;
 import dataimport.email.EmailThreadParser;
@@ -18,19 +21,20 @@ public class Tester {
 
 	public static void main(String[] args) throws Exception {
 		
+		
 		EmailThreadParser emailParser = new EmailThreadParser();
 		ThreadDataSet threads = emailParser.parse("subjects.txt", "attachments.txt", "messages.txt");
 		//System.out.println(threads.toString());			
 		
 		
 		
-		FeatureRule[] rules1 = new FeatureRule[2];
-		rules1[0] = new DateBasicFeatureRule("startDate", "Date", BasicFeatureRule.ACCENDING, 0);
-		rules1[1] = new NumericBasicFeatureRule("attatchNum", EmailDataConfig.ATTACHMENT_NUM, BasicFeatureRule.ACCENDING, 0);
+		IBasicFeatureRule[] rules1 = new IBasicFeatureRule[2];
+		rules1[0] = new DateRawFeatureRule("startDate", "Date", MsgDataConfig.DATEFORMAT);
+		rules1[1] = new NumericRawFeatureRule("attatchNum", EmailDataConfig.ATTACHMENT_NUM, RawFeatureRule.ACCENDING, 0);
 		
-		FeatureRule[] rules2 = new FeatureRule[1];
+		IBasicFeatureRule[] rules2 = new IBasicFeatureRule[1];
 		String[] hasThese = {"Fwd"};		
-		rules2[0] = new TextBinaryFeatureRule("isFwd", null, EmailDataConfig.SUBJECT, hasThese);
+		rules2[0] = new TextBinaryFeatureRule("isFwd", EmailDataConfig.SUBJECT, hasThese);
 		
 		FeatureExtractor extractor = new WekaFeatureExtractor();
 		IntermediateDataSet destDataSet1 = extractor.extract(threads, "test", rules1);

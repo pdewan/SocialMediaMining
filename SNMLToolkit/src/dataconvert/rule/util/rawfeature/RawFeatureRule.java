@@ -1,11 +1,11 @@
-package dataconvert.rule.util.basic;
+package dataconvert.rule.util.rawfeature;
 
-import weka.core.Instance;
 import dataconvert.rule.FeatureRule;
+import dataconvert.rule.basicfeature.IBasicFeatureRule;
 import dataimport.MessageData;
 import dataimport.ThreadData;
 
-public class BasicFeatureRule extends FeatureRule{	
+public class RawFeatureRule extends FeatureRule implements IBasicFeatureRule{	
 	protected int k;
 	protected int inOrder;
 	protected String attrName;
@@ -13,7 +13,7 @@ public class BasicFeatureRule extends FeatureRule{
 	public static final int ACCENDING = 0;
 	public static final int DECENDING = 1;
 	
-	public BasicFeatureRule(String destFeatureName, 
+	public RawFeatureRule(String destFeatureName, 
 			String srcAttrName, 
 			int inOrder, int kth){
 		super(destFeatureName);
@@ -55,17 +55,9 @@ public class BasicFeatureRule extends FeatureRule{
 	}
 
 
-
-	@Override
-	public Object extract(Instance anInstance) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public void checkValid(Object val) throws Exception {
-		// TODO Auto-generated method stub
-		
+	
 	}
 
 }

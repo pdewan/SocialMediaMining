@@ -2,11 +2,12 @@ package dataconvert.rule;
 
 import java.lang.reflect.Array;
 
-public abstract class NumericVectorSuperFeatureRule extends FeatureRule{
-	public int length = 0;
+public class NumericVectorFeatureRule extends FeatureRule {
+
+public int length = 0;
 	
 	//for the same dataset, the rule must return vector with the same length
-	public NumericVectorSuperFeatureRule(String featureName, int l){
+	public NumericVectorFeatureRule(String featureName, int l){
 		super(featureName);
 		length = l;
 	}
