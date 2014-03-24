@@ -1,13 +1,15 @@
 package usercase.markquestion;
 
 
-import dataconvert.FeatureExtractor;
+import dataconvert.BasicFeatureExtractor;
+import dataconvert.SuperFeatureExtractor;
 import dataconvert.IntermediateDataSet;
-import dataconvert.WekaFeatureExtractor;
+import dataconvert.WekaDataSetInitializer;
+import dataconvert.rule.basicfeature.FollowMessageNumRule;
 import dataconvert.rule.basicfeature.IBasicFeatureRule;
-import dataconvert.rule.superfeature.ClusterModelRule;
-import dataconvert.rule.superfeature.ISuperFeatureRule;
 import dataconvert.rule.basicfeature.TextBinaryFeatureRule;
+import dataconvert.rule.superfeature.ISuperFeatureRule;
+import dataconvert.rule.superfeature.WekaKmeansModelRule;
 import dataconvert.rule.util.rawfeature.DateRawFeatureRule;
 import dataconvert.rule.util.rawfeature.NumericRawFeatureRule;
 import dataconvert.rule.util.rawfeature.RawFeatureRule;
@@ -28,22 +30,33 @@ public class Tester {
 		
 		
 		
-		IBasicFeatureRule[] rules1 = new IBasicFeatureRule[2];
-		rules1[0] = new DateRawFeatureRule("startDate", "Date", MsgDataConfig.DATEFORMAT);
-		rules1[1] = new NumericRawFeatureRule("attatchNum", EmailDataConfig.ATTACHMENT_NUM, RawFeatureRule.ACCENDING, 0);
+		IBasicFeatureRule[] rules1 = new IBasicFeatureRule[1];
+		//rules1[0] = new DateRawFeatureRule("startDate", "Date", MsgDataConfig.DATEFORMAT);
+		rules1[0] = new NumericRawFeatureRule("attatchNum", EmailDataConfig.ATTACHMENT_NUM, RawFeatureRule.ACCENDING, 0);
 		
-		IBasicFeatureRule[] rules2 = new IBasicFeatureRule[1];
+		IBasicFeatureRule[] rules2 = new IBasicFeatureRule[2];
 		String[] hasThese = {"Fwd"};		
 		rules2[0] = new TextBinaryFeatureRule("isFwd", EmailDataConfig.SUBJECT, hasThese);
+		rules2[1] = new FollowMessageNumRule("responseNum");
 		
-		FeatureExtractor extractor = new WekaFeatureExtractor();
+		WekaDataSetInitializer initializer = new WekaDataSetInitializer();
+		BasicFeatureExtractor extractor = new BasicFeatureExtractor(initializer);
+		
 		IntermediateDataSet destDataSet1 = extractor.extract(threads, "test", rules1);
 		IntermediateDataSet destDataSet2 = extractor.extract(threads, "test2", rules2);
-		IntermediateDataSet destDataSet = destDataSet2.merge(destDataSet1);
+		IntermediateDataSet destDataSet = destDataSet2.mergeByAttributes(destDataSet1);
+		
+		ISuperFeatureRule[] sr = new ISuperFeatureRule[1];
+		WekaKmeansModelRule kmeans	= new WekaKmeansModelRule("cluster", 3);
+		kmeans.train(destDataSet);
+		sr[0] = kmeans;
+		
+		SuperFeatureExtractor extractor2 = new SuperFeatureExtractor(initializer);
+		IntermediateDataSet finDataSet = extractor2.extract(destDataSet, "testCluster", sr);
 		
 		//destDataSet1.save("testIntermediate.arff");
 		
-		System.out.println(destDataSet.toString());
+		System.out.println(finDataSet.toString());
 		
 		// TODO Auto-generated method stub
 		/*

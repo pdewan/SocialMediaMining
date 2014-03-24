@@ -20,7 +20,7 @@ public class ClusterModelRule extends NominalSuperFeatureRule{
 
 	public ClusterModelRule(String featureName, ArrayList<String> aDomain) {
 		super(featureName, aDomain);
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	public void train(IntermediateDataSet trainingSet)  throws Exception{

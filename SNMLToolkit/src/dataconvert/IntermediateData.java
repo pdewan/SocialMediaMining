@@ -1,6 +1,8 @@
 package dataconvert;
 
-public interface IntermediateData {
+import dataimport.DataInstance;
+
+public interface IntermediateData extends DataInstance{
 	
 	public int setAttrValue(IntermediateDataSet dataset, int attrIndex, Object val);
 	public int setDateAttrValue(IntermediateDataSet dataset, int attrIndex, Object val);

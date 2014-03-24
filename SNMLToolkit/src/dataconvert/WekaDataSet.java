@@ -26,7 +26,7 @@ public class WekaDataSet implements IntermediateDataSet {
 	}
 	
 	@Override
-	public void addInstance(IntermediateData inst) throws Exception {
+	public void addDataInstance(IntermediateData inst) throws Exception {
 		if(!(inst instanceof WekaData)){
 			throw new Exception("Wrong data type passed in");
 		}
@@ -39,11 +39,6 @@ public class WekaDataSet implements IntermediateDataSet {
 		return dataset.attribute(index);
 	}
 	
-	@Override
-	public void insertAttributeAt(int index) throws Exception{
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public void save(String path) throws Exception{
@@ -66,13 +61,60 @@ public class WekaDataSet implements IntermediateDataSet {
 	}
 
 	@Override
-	public IntermediateDataSet merge(IntermediateDataSet anotherDataSet) throws Exception {
+	public IntermediateDataSet mergeByAttributes(IntermediateDataSet anotherDataSet) throws Exception {
 		if(!(anotherDataSet instanceof WekaDataSet)){
 			throw new Exception("uncampatible dataset type");
 		}
 		
 		Instances insts = Instances.mergeInstances(dataset, ((WekaDataSet)anotherDataSet).getDataSet());
 		return new WekaDataSet(insts);
+	}
+
+	@Override
+	public IntermediateData getDataInstance(int index) throws Exception {
+		WekaData inst = new WekaData(dataset.get(index));
+		inst.setRelatedDataset(this);
+		return inst;
+	}
+
+
+	@Override
+	public int size() {
+		return dataset.numInstances();
+	}
+
+	@Override
+	public IntermediateDataSet mergeByDataInstances(IntermediateDataSet[] otherDataSets)
+			throws Exception {
+		if(otherDataSets==null || otherDataSets.length<1){ 
+			throw new Exception("empty input");
+		}
+		if(!(otherDataSets instanceof WekaDataSet[])){
+			throw new Exception("uncampatible datasets type");
+		}
+		
+		WekaDataSet[] datasets = (WekaDataSet[])otherDataSets;
+		
+		Instances insts = new Instances(datasets[0].getDataSet());
+		for(int i=1; i<datasets.length; i++){
+			for(int j=0; j<datasets[i].size(); j++){
+				insts.add(((WekaData)datasets[i].getDataInstance(j)).getInstValue());
+			}
+		}
+		return new WekaDataSet(insts);
+	}
+
+	@Override
+	public IntermediateDataSet[] splitToTrainAndTest(double trainPercent)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IntermediateDataSet[] splitToFolds(int foldNum) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

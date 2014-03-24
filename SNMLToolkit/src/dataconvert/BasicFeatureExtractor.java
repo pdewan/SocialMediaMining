@@ -1,19 +1,15 @@
 package dataconvert;
 
+import dataconvert.rule.DateFeatureRule;
 import dataconvert.rule.basicfeature.IBasicFeatureRule;
-import dataconvert.rule.superfeature.DateSuperFeatureRule;
-import dataconvert.rule.util.rawfeature.DateRawFeatureRule;
 import dataimport.ThreadData;
 import dataimport.ThreadDataSet;
 
-public abstract class FeatureExtractor {
+public class BasicFeatureExtractor extends IFeatureExtractor{
 	
-	protected abstract IntermediateDataSet initDestDataSet(
-			String destDataSetName, int threadNum, IBasicFeatureRule[] rules) throws Exception;
-	
-	protected abstract IntermediateData initADataInstance(
-			IntermediateDataSet relatedDataset, IBasicFeatureRule[] rules);
-	
+	public BasicFeatureExtractor(IntermediateDataSetInitializer init) {
+		super(init);
+	}
 	
 	public IntermediateDataSet extract(ThreadDataSet srcDataSet, 
 			String destDataSetName,
@@ -24,17 +20,17 @@ public abstract class FeatureExtractor {
 		}
 		
 		int threadNum = srcDataSet.size();	
-		IntermediateDataSet destDataSet = this.initDestDataSet(destDataSetName, threadNum, rules);
+		IntermediateDataSet destDataSet = this.destDatasetInit.initDestDataSet(destDataSetName, threadNum, rules);
 			
 		
 		for(int threadId = 0; threadId < threadNum; threadId ++){
-			if(srcDataSet.getThreadData(threadId)==null){
+			if(srcDataSet.getDataInstance(threadId)==null){
 				throw new Exception("null threadId");
 			}
 			
-			ThreadData srcThread = srcDataSet.getThreadData(threadId);
+			ThreadData srcThread = srcDataSet.getDataInstance(threadId);
 			
-			IntermediateData inst = this.initADataInstance(destDataSet, rules);
+			IntermediateData inst = this.destDatasetInit.initADataInstance(destDataSet, rules);
 			int attrId = 0;
 						
 			for(int i=0; i<rules.length; i++){				
@@ -46,14 +42,13 @@ public abstract class FeatureExtractor {
 					
 				rules[i].checkValid(val);
 				
-				if(rules[i] instanceof DateRawFeatureRule || 
-						rules[i] instanceof DateSuperFeatureRule){
+				if(rules[i] instanceof DateFeatureRule){
 					attrId = inst.setDateAttrValue(destDataSet, attrId++, val);
 				}else{	
 					attrId = inst.setAttrValue(destDataSet, attrId++, val);
 				}
 			}
-			destDataSet.addInstance(inst);			
+			destDataSet.addDataInstance(inst);			
 		}
 		
 		return destDataSet;		

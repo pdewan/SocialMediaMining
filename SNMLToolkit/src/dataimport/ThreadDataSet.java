@@ -1,9 +1,8 @@
 package dataimport;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
-public class ThreadDataSet {
+public class ThreadDataSet{
 	protected ArrayList<ThreadData> threads;
 	
 	@Override
@@ -45,7 +44,7 @@ public class ThreadDataSet {
 	*/
 	
 	//Setup an empty thread at threadId only if it's not initialized yet
-	public ThreadData getThreadData(int threadId){
+	public ThreadData getDataInstance(int threadId){
 		if(threadId >= threads.size() ){
 			int i = threads.size();
 			for(; i<=threadId; i++){
@@ -64,7 +63,8 @@ public class ThreadDataSet {
 	*/
 	
 	public void addMsgData(int threadId, MessageData aMsgData){
-		this.getThreadData(threadId).addMsgData(aMsgData);
+		ThreadData thread = this.getDataInstance(threadId);
+		thread.addMsgData(aMsgData);
 	}
 	
 	public int size(){

@@ -2,9 +2,7 @@ package dataconvert;
 
 import java.lang.reflect.Array;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
-import dataimport.MsgDataConfig;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
 import weka.core.Instance;
@@ -17,6 +15,10 @@ public class WekaData implements IntermediateData {
 
 	public WekaData(int attrNum){
 		inst = new DenseInstance(attrNum);
+	}
+	
+	public WekaData(Instance inst){
+		this.inst = inst;
 	}
 	
 	public void setRelatedDataset(WekaDataSet dataset){	

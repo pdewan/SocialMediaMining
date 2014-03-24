@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import weka.clusterers.SimpleKMeans;
 import dataconvert.IntermediateData;
 import dataconvert.IntermediateDataSet;
+import dataconvert.WekaData;
 import dataconvert.WekaDataSet;
 import dataimport.ThreadData;
 
 public class WekaKmeansModelRule extends KmeansModelRule {
+	
+	SimpleKMeans kmeans;
 	
 	public WekaKmeansModelRule(String featureName, ArrayList<String> aDomain) {
 		super(featureName, aDomain);
@@ -20,7 +23,7 @@ public class WekaKmeansModelRule extends KmeansModelRule {
 
 	@Override
 	public void train(IntermediateDataSet trainingSet) throws Exception {
-		SimpleKMeans kmeans = new SimpleKMeans();
+		kmeans = new SimpleKMeans();
 
 		kmeans.setSeed((int)System.currentTimeMillis());
 
@@ -34,8 +37,19 @@ public class WekaKmeansModelRule extends KmeansModelRule {
 
 	@Override
 	public Object extract(IntermediateData anInstData) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		/*
+		double[] prob = kmeans.distributionForInstance(((WekaData)anInstData).getInstValue());
+		int cluster = 0;
+		double maxProb = 0;
+		for(int i=0; i<prob.length; i++){
+			if(maxProb < prob[i]){
+				maxProb = prob[i];
+				cluster = i;
+			}
+		}
+		*/
+		int cluster = kmeans.clusterInstance(((WekaData)anInstData).getInstValue());
+		return domain.get(cluster);
 	}
 
 }

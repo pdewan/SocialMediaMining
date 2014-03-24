@@ -5,11 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.Set;
 import java.util.TreeSet;
 
 
-public class ThreadData {
+public class ThreadData implements DataInstance{
 	/*	messageDatas in this thread
 	 * 	Sorted by date&time
 	 */
