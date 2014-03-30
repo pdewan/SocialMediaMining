@@ -15,14 +15,14 @@ public class EmailDataConfig extends MsgDataConfig {
 	public EmailDataConfig(){
 		super();
 		
-		attributeTypes.put(ID, i);
-		attributeTypes.put(SUBJECT, s);
-		attributeTypes.put(ATTACHMENT_NUM, i);
-		attributeTypes.put(FROM, i);
+		attributeTypes.put(ID, INT);
+		attributeTypes.put(SUBJECT, STRING);
+		attributeTypes.put(ATTACHMENT_NUM, DOUBLE);
+		attributeTypes.put(FROM, INT);
 		attributeTypes.put(DAYOFWEEK, "{Mon, Tue, Wed, Thu, Fri, Sat, Sun}");
-		attributeTypes.put(TIMEZONE, s);
+		attributeTypes.put(TIMEZONE, STRING);
 		
-		//array must be extracted to feature
+		//TODO: ARRAY
 		attributeTypes.put(ATTACHMENTS, null);
 		attributeTypes.put(RECIPIENTS, null);		
 	}

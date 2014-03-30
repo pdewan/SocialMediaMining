@@ -2,6 +2,7 @@ package dataconvert;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 
 import weka.core.Attribute;
 import weka.core.Instance;
@@ -104,17 +105,66 @@ public class WekaDataSet implements IntermediateDataSet {
 		return new WekaDataSet(insts);
 	}
 
+	public void randomize(){
+		dataset.randomize(new java.util.Random(System.currentTimeMillis()));
+	}
+	
+	public void randomize(int seed){
+		dataset.randomize(new java.util.Random(seed));
+	}
+	
 	@Override
 	public IntermediateDataSet[] splitToTrainAndTest(double trainPercent)
 			throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		
+		if(trainPercent >=1 || trainPercent<=0){
+			throw new Exception("invalid trainPercent: "+trainPercent);
+		}
+		
+		int trainSize = (int) Math.round(dataset.numInstances() * trainPercent);
+		int testSize = dataset.numInstances() - trainSize;		
+		Instances train = new Instances(dataset, 0, trainSize);
+		Instances test = new Instances(dataset, trainSize, testSize);
+		
+		IntermediateDataSet[] splits = new IntermediateDataSet[2];
+		splits[0] = new WekaDataSet(train);
+		splits[1] = new WekaDataSet(test);
+		
+		return splits;
 	}
 
 	@Override
 	public IntermediateDataSet[] splitToFolds(int foldNum) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		if(foldNum <=1){
+			throw new Exception("invalid foldNum: "+foldNum);
+		}
+		
+		dataset.stratify(foldNum);
+		
+		IntermediateDataSet[] splits = new IntermediateDataSet[foldNum];
+		for(int i=0; i<foldNum; i++){
+			splits[i] = new WekaDataSet(dataset.testCV(foldNum, i));
+		}
+		
+		return splits;
+	}
+	
+	public IntermediateDataSet[] getFold(int foldNum, int fold) throws Exception {
+		if(foldNum <=1){
+			throw new Exception("invalid foldNum: "+foldNum);
+		}
+		
+		Instances tmp = new Instances(dataset);
+		tmp.randomize(new java.util.Random(System.currentTimeMillis()));
+		tmp.stratify(foldNum);
+		
+		IntermediateDataSet[] splits = new IntermediateDataSet[2*foldNum];
+		for(int i=0; i<foldNum; i++){
+			splits[2*i] = new WekaDataSet(tmp.trainCV(foldNum, i));
+			splits[2*i+1] = new WekaDataSet(tmp.testCV(foldNum, i));
+		}
+		
+		return splits;
 	}
 
 }

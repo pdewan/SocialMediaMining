@@ -23,27 +23,23 @@ public class YahooAnswersQuestionConfig extends YahooAnswersDataConfig{
 	public YahooAnswersQuestionConfig(){
 		super();
 		
-		attributeTypes.put(ID, s);
+		attributeTypes.put(ID, STRING);
 		attributeTypes.put(TYPE, "{Open, Answered, Deleted}");
-		attributeTypes.put(SUBJECT, s);
+		attributeTypes.put(SUBJECT, STRING);
 		
-		//TODO: handle Category, it's JSONObject / nominal
-		attributeTypes.put(CATEGORY, j);
+		attributeTypes.put(CATEGORY, JSON);
 		
-		attributeTypes.put(NUMANSWERS, i);
-		attributeTypes.put(NUMCOMMENTS, i);
+		attributeTypes.put(NUMANSWERS, INT);
+		attributeTypes.put(NUMCOMMENTS, INT);
 		
-		attributeTypes.put(CHOSENANSWER, s);
-		attributeTypes.put(CHOSENANSWERID, s);
-		attributeTypes.put(CHOSENANSWERNICK, s);
-		attributeTypes.put(CHOSENANSWERTIMESTAMP, l);
-		attributeTypes.put(CHOSENANSWERAWARDTIMESTAMP, l);
+		attributeTypes.put(CHOSENANSWER, STRING);
+		attributeTypes.put(CHOSENANSWERID, STRING);
+		attributeTypes.put(CHOSENANSWERNICK, STRING);
+		attributeTypes.put(CHOSENANSWERTIMESTAMP, LONG);
+		attributeTypes.put(CHOSENANSWERAWARDTIMESTAMP, LONG);
 		
-		//TODO: handle Answers later, it's JSONObject contains JSONArray
-		attributeTypes.put(ANSWERS, j);
-		
-		//TODO: handle Comments later, haven't seen any question containing it
-		attributeTypes.put(COMMENTS, j);
+		attributeTypes.put(ANSWERS, MESSAGE);
+		attributeTypes.put(COMMENTS, JSON);
 	}
 	
 

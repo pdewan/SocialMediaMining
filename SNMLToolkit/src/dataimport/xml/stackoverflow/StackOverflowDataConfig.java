@@ -7,7 +7,7 @@ import dataimport.xml.XmlDataConfig;
 
 public abstract class StackOverflowDataConfig extends XmlDataConfig{
 	
-	protected static String dateFormat		= "date \"yyyy-MM-ddTHH:mm:ss.s\"";
+	public static final String DATEFORMAT_STACKOVER	= "yyyy-MM-ddTHH:mm:ss.s";
 	
 	public static String ID 				= "Id";
 	public static String SCORE				= "Score";	
@@ -16,9 +16,9 @@ public abstract class StackOverflowDataConfig extends XmlDataConfig{
 	public StackOverflowDataConfig(){
 		super();
 		
-		attributeTypes.put(ID, s);
-		attributeTypes.put(SCORE, i);
-		attributeTypes.put(CREATIONDATE, dateFormat);
+		attributeTypes.put(ID, STRING);
+		attributeTypes.put(SCORE, DOUBLE);
+		attributeTypes.put(CREATIONDATE, DATEFORMAT_STACKOVER);
 	}
 	
 }

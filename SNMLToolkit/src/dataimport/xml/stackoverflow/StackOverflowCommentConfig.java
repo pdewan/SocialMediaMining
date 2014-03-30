@@ -9,9 +9,9 @@ public class StackOverflowCommentConfig extends StackOverflowDataConfig{
 	public StackOverflowCommentConfig(){
 		super();
 		
-		attributeTypes.put(POSTID, s);
-		attributeTypes.put(USERID, s);
-		attributeTypes.put(TEXT, s);
+		attributeTypes.put(POSTID, STRING);
+		attributeTypes.put(USERID, STRING);
+		attributeTypes.put(TEXT, STRING);
 	}
 	
 }

@@ -12,7 +12,7 @@ import weka.core.Attribute;
 import weka.core.Instances;
 
 public class WekaArffWriter {
-	
+	/*
 	public static void write(FlattenedThreadDataSet dataSet, 
 			String dataSetName,
 			String savePath) throws IOException{
@@ -127,5 +127,5 @@ public class WekaArffWriter {
 		
 		return text.toString();
 	}
-
+*/
 }

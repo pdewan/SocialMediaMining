@@ -20,17 +20,17 @@ public class StackOverflowPostDataCofig extends StackOverflowDataConfig{
 		super();
 
 		attributeTypes.put(POSTTYPEID, "{1, 2, 3}");
-		attributeTypes.put(OWNERUSERID, s);
-		attributeTypes.put(LASTEDITORUSERID, s);
-		attributeTypes.put(LASTEDITORDISPLAYNAME, s);
+		attributeTypes.put(OWNERUSERID, STRING);
+		attributeTypes.put(LASTEDITORUSERID, STRING);
+		attributeTypes.put(LASTEDITORDISPLAYNAME, STRING);
 		
-		attributeTypes.put(BODY, s);
+		attributeTypes.put(BODY, STRING);
 		
-		attributeTypes.put(COMMENTCOUNT, i);
-		attributeTypes.put(FAVORITECOUNT, i);
+		attributeTypes.put(COMMENTCOUNT, DOUBLE);
+		attributeTypes.put(FAVORITECOUNT, DOUBLE);
 		
-		attributeTypes.put(LASTEDITDATE, dateFormat);
-		attributeTypes.put(LASTACTIVITYDATE, dateFormat);
+		attributeTypes.put(LASTEDITDATE, DATEFORMAT_STACKOVER);
+		attributeTypes.put(LASTACTIVITYDATE, DATEFORMAT_STACKOVER);
 	}
 	
 }

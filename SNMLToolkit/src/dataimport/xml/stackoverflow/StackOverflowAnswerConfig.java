@@ -6,7 +6,7 @@ public class StackOverflowAnswerConfig extends StackOverflowPostDataCofig{
 	public StackOverflowAnswerConfig(){
 		super();
 		
-		attributeTypes.put(PARENTID, s);
+		attributeTypes.put(PARENTID, INT);
 	}
 	
 }

@@ -7,5 +7,11 @@ public class YahooAnswersAnswerConfig extends YahooAnswersDataConfig{
 	public static String REREFENCE_DATATYPE 	= null;
 	
 	public static String BEST 					= "Best";
-	public static String BEST_DATATYPE 			= i;
+	public static String BEST_DATATYPE 			= INT;
+	
+	public YahooAnswersAnswerConfig(){
+		super();
+		
+		//attributeTypes.put(BEST, ?);
+	}
 }

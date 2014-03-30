@@ -35,7 +35,14 @@ public class ThreadDataSet{
 	}
 	
 	public void setThreadData(int threadId, ThreadData aThread){
+		if(threadId >= threads.size()){
+			threads.add(null);
+		}
 		threads.set(threadId, aThread);
+	}
+	
+	public void addThreadData(ThreadData aThread){
+		threads.add(aThread);
 	}
 	/*
 	public void setThreadData(String threadId, ThreadData aThread){

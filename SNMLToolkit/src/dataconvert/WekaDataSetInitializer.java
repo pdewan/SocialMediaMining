@@ -31,7 +31,7 @@ public class WekaDataSetInitializer implements IntermediateDataSetInitializer {
 				Attribute attr;
 
 				if(rules[i] instanceof DateFeatureRule){
-					attr = new Attribute(rules[i].getDestFeatureName(), MsgDataConfig.DATEFORMAT);
+					attr = new Attribute(rules[i].getDestFeatureName(), MsgDataConfig.DATEFORMAT_DEFAULT);
 				}
 				else if(rules[i] instanceof NumericFeatureRule){
 					attr = new Attribute(rules[i].getDestFeatureName());

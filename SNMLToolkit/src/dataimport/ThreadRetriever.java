@@ -13,7 +13,7 @@ public class ThreadRetriever {
 	}
 	
 	public void sortMsgIntoThread(MessageData aMsgData){
-		Object threadIdObj = aMsgData.getAttribute(aMsgDataConfig.THREADID);
+		Object threadIdObj = aMsgData.getAttribute(MsgDataConfig.THREADID);
 		if(threadIdObj==null){
 			System.out.println("Error in ThreadRetriever.sortMsgIntoThread: "
 					+ "no thread id available of message");

@@ -2,7 +2,6 @@ package dataconvert.rule.superfeature;
 
 import java.util.ArrayList;
 
-import dataconvert.rule.FeatureRule;
 import dataconvert.rule.NominalFeatureRule;
 
 public abstract class NominalSuperFeatureRule extends NominalFeatureRule implements ISuperFeatureRule {

@@ -1,6 +1,8 @@
 package usercase.markquestion;
 
 
+import java.io.File;
+
 import dataconvert.BasicFeatureExtractor;
 import dataconvert.SuperFeatureExtractor;
 import dataconvert.IntermediateDataSet;
@@ -9,21 +11,38 @@ import dataconvert.rule.basicfeature.FollowMessageNumRule;
 import dataconvert.rule.basicfeature.IBasicFeatureRule;
 import dataconvert.rule.basicfeature.TextBinaryFeatureRule;
 import dataconvert.rule.superfeature.ISuperFeatureRule;
-import dataconvert.rule.superfeature.WekaKmeansModelRule;
+import dataconvert.rule.superfeature.model.IModelRule;
+import dataconvert.rule.superfeature.model.weka.WekaKmeansModelRule;
 import dataconvert.rule.util.rawfeature.DateRawFeatureRule;
 import dataconvert.rule.util.rawfeature.NumericRawFeatureRule;
 import dataconvert.rule.util.rawfeature.RawFeatureRule;
 import dataimport.MsgDataConfig;
+import dataimport.ThreadData;
 import dataimport.ThreadDataSet;
 import dataimport.email.EmailDataConfig;
 import dataimport.email.EmailThreadParser;
+import dataimport.json.JsonDataConfig;
+import dataimport.json.JsonThreadParser;
+import dataimport.json.yahooanswers.YahooAnswersAnswerConfig;
+import dataimport.json.yahooanswers.YahooAnswersQuestionConfig;
 
 
 public class Tester {
 
 	public static void main(String[] args) throws Exception {
 		
+		JsonDataConfig qconfig = new YahooAnswersQuestionConfig();
+		JsonDataConfig aconfig = new YahooAnswersAnswerConfig();
+		JsonThreadParser parser = new JsonThreadParser(qconfig, aconfig, "Date");
 		
+		File dirfile = new File("/Users/jinjingma/Documents/workspace/DataCollection/data/politics/answers");
+		ThreadDataSet threads = parser.parseDirectory(dirfile);
+		System.out.println(threads.toString());
+		
+		
+		
+		
+		/*
 		EmailThreadParser emailParser = new EmailThreadParser();
 		ThreadDataSet threads = emailParser.parse("subjects.txt", "attachments.txt", "messages.txt");
 		//System.out.println(threads.toString());			
@@ -36,19 +55,24 @@ public class Tester {
 		
 		IBasicFeatureRule[] rules2 = new IBasicFeatureRule[2];
 		String[] hasThese = {"Fwd"};		
-		rules2[0] = new TextBinaryFeatureRule("isFwd", EmailDataConfig.SUBJECT, hasThese);
-		rules2[1] = new FollowMessageNumRule("responseNum");
+		rules2[1] = new TextBinaryFeatureRule("isFwd", EmailDataConfig.SUBJECT, hasThese);
+		rules2[0] = new FollowMessageNumRule("responseNum");
 		
 		WekaDataSetInitializer initializer = new WekaDataSetInitializer();
 		BasicFeatureExtractor extractor = new BasicFeatureExtractor(initializer);
 		
 		IntermediateDataSet destDataSet1 = extractor.extract(threads, "test", rules1);
 		IntermediateDataSet destDataSet2 = extractor.extract(threads, "test2", rules2);
-		IntermediateDataSet destDataSet = destDataSet2.mergeByAttributes(destDataSet1);
+		IntermediateDataSet destDataSet = destDataSet1.mergeByAttributes(destDataSet2);
+		
+	
 		
 		ISuperFeatureRule[] sr = new ISuperFeatureRule[1];
-		WekaKmeansModelRule kmeans	= new WekaKmeansModelRule("cluster", 3);
-		kmeans.train(destDataSet);
+		
+		
+		
+		IModelRule kmeans = new WekaKmeansModelRule("cluster", 3);
+		kmeans.train(destDataSet, null);
 		sr[0] = kmeans;
 		
 		SuperFeatureExtractor extractor2 = new SuperFeatureExtractor(initializer);

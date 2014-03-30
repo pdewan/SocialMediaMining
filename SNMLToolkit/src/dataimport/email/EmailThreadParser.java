@@ -92,7 +92,7 @@ public class EmailThreadParser {
 	public ThreadDataSet parseThreadInfo(File threadInfoFile, ArrayList<MessageData> msgs) throws IOException, ParseException{
 		ThreadRetriever retriever = new ThreadRetriever();
 		SimpleDateFormat oriDateFormat = new SimpleDateFormat("MMM dd HH:mm:ss yyyy");
-		SimpleDateFormat destDateFormat = new SimpleDateFormat(EmailDataConfig.DATEFORMAT);
+		SimpleDateFormat destDateFormat = new SimpleDateFormat(EmailDataConfig.DATEFORMAT_DEFAULT);
 		
 		BufferedReader reader = new BufferedReader(new FileReader(threadInfoFile));
 		String line;
@@ -140,7 +140,7 @@ public class EmailThreadParser {
 			msg.addAttribute(EmailDataConfig.FROM, fromId);
 			msg.addAttribute(EmailDataConfig.RECIPIENTS, recipients);
 			msg.addAttribute(EmailDataConfig.DAYOFWEEK, dayOfWeek);
-			msg.addAttribute(EmailDataConfig.DATE, date);
+			msg.addAttribute(EmailDataConfig.DATE_DEFAULT, date);
 			msg.addAttribute(EmailDataConfig.TIMEZONE, timezone);	
 						
 			retriever.sortMsgIntoThread(msg);

@@ -1,24 +1,31 @@
 package dataimport;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public abstract class MsgDataConfig {
 	
-	protected static String s 	= "string";
-	protected static String i 	= "int";
-	protected static String l 	= "long";
-	protected static String d 	= "double";
-	public static String DATEFORMAT 	= "yyyy-MM-dd HH:mm:ss";
+	public static final String STRING 				= "string";
+	public static final String INT 					= "int";
+	public static final String LONG 				= "long";
+	public static final String DOUBLE 				= "double";
+	public static final String TYPEDATE				= "date";
+	public static final String DATEFORMAT_DEFAULT 	= "yyyy-MM-dd HH:mm:ss";
 	
-	protected HashMap<String, String> attributeTypes;
+	public HashMap<String, String> attributeTypes;
 	
-	public static String THREADID = "ThreadId";
-	public static String DATE = "Date";
+	public static final String THREADID 			= "ThreadId";
+	public static final String DATE_DEFAULT 		= "Date";
 	
 	public MsgDataConfig(){
 		attributeTypes = new HashMap<String, String>();
-		attributeTypes.put(THREADID, i);
-		attributeTypes.put(DATE, DATEFORMAT);
+		attributeTypes.put(THREADID, INT);
+		attributeTypes.put(DATE_DEFAULT, TYPEDATE);
+	}
+	
+	public Set<Entry<String, String>> attrTypeEntries(){
+		return attributeTypes.entrySet();
 	}
 	
 	public String getAttributeType(String attributeName){

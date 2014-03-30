@@ -29,15 +29,15 @@ public class ThreadData implements DataInstance{
 	public ThreadData(){
 		msgDatas = new TreeSet<MessageData>(new Comparator<MessageData>(){
             public int compare(MessageData a, MessageData b){
-            	Object dateObjA = a.getAttribute(MsgDataConfig.DATE);
-            	Object dateObjB = b.getAttribute(MsgDataConfig.DATE);
+            	Object dateObjA = a.getAttribute(MsgDataConfig.DATE_DEFAULT);
+            	Object dateObjB = b.getAttribute(MsgDataConfig.DATE_DEFAULT);
             	if(dateObjA==null || dateObjB==null){
             		return 0;
             	}
             	
             	String dateA = (String)dateObjA;
             	String dateB = (String)dateObjB;
-            	SimpleDateFormat dateFormat = new SimpleDateFormat(MsgDataConfig.DATEFORMAT);
+            	SimpleDateFormat dateFormat = new SimpleDateFormat(MsgDataConfig.DATEFORMAT_DEFAULT);
             	
 				try {
 					Date dA = dateFormat.parse(dateA);
