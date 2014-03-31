@@ -2,16 +2,19 @@ package dataconvert;
 
 import java.util.ArrayList;
 
+import rule.DateFeatureRule;
+import rule.IFeatureRule;
+import rule.NominalFeatureRule;
+import rule.NumericFeatureRule;
+import rule.NumericVectorFeatureRule;
+import rule.StringFeatureRule;
 import weka.core.Attribute;
 import weka.core.Instances;
-import dataconvert.rule.DateFeatureRule;
-import dataconvert.rule.IFeatureRule;
-import dataconvert.rule.NominalFeatureRule;
-import dataconvert.rule.NumericFeatureRule;
-import dataconvert.rule.NumericVectorFeatureRule;
 import dataimport.MsgDataConfig;
 
 public class WekaDataSetInitializer implements IntermediateDataSetInitializer {
+	
+	protected int attrNum;
 
 	@Override
 	public IntermediateDataSet initDestDataSet(String destDataSetName,
@@ -40,6 +43,13 @@ public class WekaDataSetInitializer implements IntermediateDataSetInitializer {
 					ArrayList<String> domain = ((NominalFeatureRule)rules[i]).getDomain();
 					attr = new Attribute(rules[i].getDestFeatureName(), domain);
 				}
+				else if(rules[i] instanceof StringFeatureRule){
+					ArrayList<String> domain = null;
+					attr = new Attribute(rules[i].getDestFeatureName(), domain);
+				}
+				else if(rules[i] instanceof DateFeatureRule){
+					attr = new Attribute(rules[i].getDestFeatureName(), MsgDataConfig.DATEFORMAT_DEFAULT);
+				}
 				else{
 					throw new Exception("What kind of feature rule it is!?");
 				}
@@ -47,6 +57,9 @@ public class WekaDataSetInitializer implements IntermediateDataSetInitializer {
 			}
 		}
 
+		attributes.trimToSize();
+		attrNum = attributes.size();
+		
 		Instances dataset = new Instances(destDataSetName, attributes, threadNum);		
 
 		return new WekaDataSet(dataset);
@@ -57,7 +70,7 @@ public class WekaDataSetInitializer implements IntermediateDataSetInitializer {
 			IntermediateDataSet relatedDataset, IFeatureRule[] rules)
 			throws Exception {
 		
-		WekaData inst = new WekaData(rules.length);
+		WekaData inst = new WekaData(attrNum);
 		inst.setRelatedDataset((WekaDataSet)relatedDataset);
 		return inst;
 	}

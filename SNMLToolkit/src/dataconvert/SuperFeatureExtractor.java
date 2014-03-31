@@ -1,7 +1,7 @@
 package dataconvert;
 
-import dataconvert.rule.DateFeatureRule;
-import dataconvert.rule.superfeature.ISuperFeatureRule;
+import rule.DateFeatureRule;
+import rule.superfeature.ISuperFeatureRule;
 
 public class SuperFeatureExtractor extends IFeatureExtractor{
 	

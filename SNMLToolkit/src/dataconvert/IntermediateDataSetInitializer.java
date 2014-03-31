@@ -1,6 +1,6 @@
 package dataconvert;
 
-import dataconvert.rule.IFeatureRule;
+import rule.IFeatureRule;
 
 
 

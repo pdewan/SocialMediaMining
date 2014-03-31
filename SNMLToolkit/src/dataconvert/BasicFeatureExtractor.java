@@ -1,7 +1,7 @@
 package dataconvert;
 
-import dataconvert.rule.DateFeatureRule;
-import dataconvert.rule.basicfeature.IBasicFeatureRule;
+import rule.DateFeatureRule;
+import rule.basicfeature.IBasicFeatureRule;
 import dataimport.ThreadData;
 import dataimport.ThreadDataSet;
 

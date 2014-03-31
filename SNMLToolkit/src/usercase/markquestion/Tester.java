@@ -3,19 +3,28 @@ package usercase.markquestion;
 
 import java.io.File;
 
+import rule.BinaryFeatureRule;
+import rule.NominalFeatureRule;
+import rule.basicfeature.ContainsFollowMessageRule;
+import rule.basicfeature.FollowMessageNumRule;
+import rule.basicfeature.IBasicFeatureRule;
+import rule.basicfeature.TextBinaryFeatureRule;
+import rule.basicfeature.copyraw.DateRawFeatureRule;
+import rule.basicfeature.copyraw.NumericRawFeatureRule;
+import rule.basicfeature.copyraw.RawFeatureRule;
+import rule.basicfeature.copyraw.StringRawFeatureRule;
+import rule.superfeature.ISuperFeatureRule;
+import rule.superfeature.copy.NominalCopySuperFeatureRule;
+import rule.superfeature.model.IModelRule;
+import rule.superfeature.model.mallet.MalletParallelLDAModelRule;
+import rule.superfeature.model.weka.IWekaModelRule;
+import rule.superfeature.model.weka.WekaDecissionTreeModelRule;
+import rule.superfeature.model.weka.WekaClassifyModelRule;
 import dataconvert.BasicFeatureExtractor;
 import dataconvert.SuperFeatureExtractor;
 import dataconvert.IntermediateDataSet;
+import dataconvert.WekaDataSet;
 import dataconvert.WekaDataSetInitializer;
-import dataconvert.rule.basicfeature.FollowMessageNumRule;
-import dataconvert.rule.basicfeature.IBasicFeatureRule;
-import dataconvert.rule.basicfeature.TextBinaryFeatureRule;
-import dataconvert.rule.superfeature.ISuperFeatureRule;
-import dataconvert.rule.superfeature.model.IModelRule;
-import dataconvert.rule.superfeature.model.weka.WekaKmeansModelRule;
-import dataconvert.rule.util.rawfeature.DateRawFeatureRule;
-import dataconvert.rule.util.rawfeature.NumericRawFeatureRule;
-import dataconvert.rule.util.rawfeature.RawFeatureRule;
 import dataimport.MsgDataConfig;
 import dataimport.ThreadData;
 import dataimport.ThreadDataSet;
@@ -37,9 +46,62 @@ public class Tester {
 		
 		File dirfile = new File("/Users/jinjingma/Documents/workspace/DataCollection/data/politics/answers");
 		ThreadDataSet threads = parser.parseDirectory(dirfile);
-		System.out.println(threads.toString());
+		//System.out.println(threads.toString());
 		
 		
+		IBasicFeatureRule[] basicRules = new IBasicFeatureRule[3];
+		basicRules[0] = new StringRawFeatureRule("QuestionContent", YahooAnswersQuestionConfig.CONTENT);
+		
+		String[] pronouns = {"I", "you", "my"};
+		basicRules[1] = new TextBinaryFeatureRule("hasPronoun", YahooAnswersQuestionConfig.SUBJECT, pronouns);
+		basicRules[2] = new ContainsFollowMessageRule("hasAnswer");
+		
+		
+		WekaDataSetInitializer initializer = new WekaDataSetInitializer();
+		BasicFeatureExtractor extractor = new BasicFeatureExtractor(initializer);	
+		IntermediateDataSet simpleDestDataSet = extractor.extract(threads, "simple1", basicRules);
+		
+		IntermediateDataSet[] trainTest = simpleDestDataSet.splitToTrainAndTest(0.8);
+		IntermediateDataSet train = trainTest[0];
+		IntermediateDataSet test = trainTest[1];
+		
+		
+		SuperFeatureExtractor extractor2 = new SuperFeatureExtractor(initializer);
+		
+		
+		ISuperFeatureRule[] superRules1 = new ISuperFeatureRule[3];
+		String[] attrNames = {"QuestionContent"};
+		superRules1[0] = new MalletParallelLDAModelRule("ContentTopic", attrNames, 5);
+		((IModelRule)superRules1[0]).train(train, null);
+		((IModelRule)superRules1[0]).save("malletLDA.txt");
+		
+		
+		superRules1[1] = new NominalCopySuperFeatureRule("hasPronoun", "hasPronoun", 
+				((BinaryFeatureRule)basicRules[1]).getDomain());
+		superRules1[2] = new NominalCopySuperFeatureRule("hasAnswer", "hasAnswer",
+				((BinaryFeatureRule)basicRules[1]).getDomain());
+		
+		train =  extractor2.extract(train, "train1", superRules1);
+		test = extractor2.extract(test, "test1", superRules1);
+		
+		test.save("groundTruth.arff");
+
+		ISuperFeatureRule[] superRules2 = new ISuperFeatureRule[1];
+		superRules2[0] = new WekaDecissionTreeModelRule("hasAnswerJ48", 
+				((NominalFeatureRule)superRules1[2]).getDomain());
+		
+		((WekaClassifyModelRule)superRules2[0]).setTargetIndex((WekaDataSet)train, train.numAttributes()-1);
+		((WekaClassifyModelRule)superRules2[0]).setTargetIndex((WekaDataSet)test, test.numAttributes()-1);
+		((IModelRule)superRules2[0]).train(train, null);
+		((WekaClassifyModelRule)superRules2[0]).evaluate((WekaDataSet)train, (WekaDataSet)test);
+		/*
+		train =  extractor2.extract(train, "train2", superRules2);
+		IntermediateDataSet test2 = extractor2.extract(test, "test2", superRules2);
+		
+		test2.save("testSetResult.arff");
+				
+		((WekaClassifyModelRule)superRules2[0]).evaluate((WekaDataSet)train, (WekaDataSet)test);
+		*/
 		
 		
 		/*

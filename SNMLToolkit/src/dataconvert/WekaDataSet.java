@@ -167,4 +167,9 @@ public class WekaDataSet implements IntermediateDataSet {
 		return splits;
 	}
 
+	@Override
+	public int numAttributes() throws Exception {
+		return dataset.numAttributes();
+	}
+
 }
