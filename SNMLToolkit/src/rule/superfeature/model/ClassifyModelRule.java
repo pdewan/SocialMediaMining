@@ -3,8 +3,6 @@ package rule.superfeature.model;
 import java.util.ArrayList;
 
 import rule.superfeature.NominalSuperFeatureRule;
-import dataconvert.IntermediateData;
-import dataconvert.IntermediateDataSet;
 
 public abstract class ClassifyModelRule extends NominalSuperFeatureRule
 		implements IModelRule {

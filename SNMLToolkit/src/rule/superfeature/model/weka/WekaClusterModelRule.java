@@ -3,12 +3,7 @@ package rule.superfeature.model.weka;
 import java.util.ArrayList;
 
 import rule.superfeature.model.ClusterModelRule;
-import weka.classifiers.Classifier;
 import weka.clusterers.Clusterer;
-import weka.core.Instances;
-import dataconvert.IntermediateData;
-import dataconvert.IntermediateDataSet;
-import dataconvert.WekaDataSet;
 
 public abstract class WekaClusterModelRule extends ClusterModelRule implements IWekaModelRule{
 

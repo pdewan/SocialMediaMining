@@ -12,7 +12,17 @@ public class ThreadData implements DataInstance{
 	/*	messageDatas in this thread
 	 * 	Sorted by date&time
 	 */
-	public TreeSet<MessageData> msgDatas;
+	
+	private int threadId;
+	private TreeSet<MessageData> msgDatas;
+	
+	public int getThreadId(){
+		return threadId;
+	}
+	
+	public void setThreadId(int id){
+		threadId = id;
+	}
 	
 	@Override
 	public String toString(){
@@ -82,7 +92,9 @@ public class ThreadData implements DataInstance{
 		}
 		
 		Iterator<MessageData> iter = msgDatas.iterator();
-		for(int i=0; i < k && iter.hasNext(); i++);
+		for(int i=0; i < k && iter.hasNext(); i++){
+			iter.next();
+		}
 		return iter.next();		
 	}
 	

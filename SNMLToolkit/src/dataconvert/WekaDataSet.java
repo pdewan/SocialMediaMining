@@ -114,6 +114,20 @@ public class WekaDataSet implements IntermediateDataSet {
 	}
 	
 	@Override
+	public void setTargetIndex(){
+		if(dataset.classIndex()<0){
+			dataset.setClassIndex(dataset.numAttributes()-1);
+		}
+	}
+	
+	@Override
+	public void setTargetIndex(int index){
+		if(index>=0 && index < dataset.numAttributes()){
+			dataset.setClassIndex(index);
+		}
+	}
+	
+	@Override
 	public IntermediateDataSet[] splitToTrainAndTest(double trainPercent)
 			throws Exception {
 		

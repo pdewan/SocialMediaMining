@@ -109,7 +109,12 @@ public class EmailThreadParser {
 			
 			tmp = scanner.next();
 			tmp = tmp.substring("Recipients:[".length(), tmp.length()-1);
-			String[] recipients = tmp.split(",");
+			String[] tmpRecipients = tmp.split(",");
+			int[] recipients = new int[tmpRecipients.length];
+			for(int i=0; i< recipients.length; i++){
+				int x = Integer.parseInt(tmpRecipients[i]);
+				recipients[i] = x;
+			}
 			
 			tmp = scanner.next();
 			String dayOfWeek = tmp.substring("Received-Date:".length());

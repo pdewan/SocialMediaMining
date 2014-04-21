@@ -3,7 +3,6 @@ package rule.superfeature.model.weka;
 import java.util.ArrayList;
 
 import weka.classifiers.trees.J48;
-import weka.core.Instances;
 import dataconvert.IntermediateData;
 import dataconvert.IntermediateDataSet;
 import dataconvert.WekaData;
@@ -22,11 +21,7 @@ public class WekaDecissionTreeModelRule extends WekaClassifyModelRule implements
 	
 		
 	
-	@Override
-	public Object extract(IntermediateData anInstData) throws Exception {
-		double result = classifier.classifyInstance(((WekaData)anInstData).getInstValue());
-		return domain.get((int)result);
-	}
+	
 
 
 

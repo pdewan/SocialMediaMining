@@ -1,9 +1,7 @@
 package rule.superfeature.copy;
 
 import dataconvert.IntermediateData;
-import dataimport.ThreadData;
 import rule.DateFeatureRule;
-import rule.basicfeature.copyraw.RawFeatureRule;
 import rule.superfeature.ISuperFeatureRule;
 
 public class DateCopySuperFeatureRule extends DateFeatureRule implements

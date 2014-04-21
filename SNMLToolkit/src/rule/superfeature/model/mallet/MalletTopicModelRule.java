@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 
 import rule.superfeature.model.NumericVectorModelRule;
 import cc.mallet.pipe.CharSequence2TokenSequence;
-import cc.mallet.pipe.FeatureSequence2FeatureVector;
 import cc.mallet.pipe.Input2CharSequence;
 import cc.mallet.pipe.Pipe;
 import cc.mallet.pipe.PrintInputAndTarget;

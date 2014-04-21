@@ -20,5 +20,9 @@ public interface IntermediateDataSet{
 	
 	public IntermediateDataSet[] splitToFolds(int foldNum) throws Exception;
 	
+	public void setTargetIndex();
+	
+	public void setTargetIndex(int index);
+	
 
 }

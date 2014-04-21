@@ -2,9 +2,6 @@ package rule.superfeature.model.weka;
 
 import java.util.ArrayList;
 
-import weka.clusterers.AbstractClusterer;
-import weka.clusterers.FarthestFirst;
-import weka.clusterers.RandomizableClusterer;
 import weka.clusterers.SimpleKMeans;
 import dataconvert.IntermediateData;
 import dataconvert.IntermediateDataSet;
@@ -68,6 +65,13 @@ public class WekaKmeansModelRule extends WekaClusterModelRule implements IWekaMo
 		return domain.get(cluster);
 	}
 
+	@Override
+	public void evaluate(WekaDataSet train, WekaDataSet test) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 	
 
 }

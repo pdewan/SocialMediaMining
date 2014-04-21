@@ -1,33 +1,22 @@
 package rule.superfeature.model.weka;
 
-import java.util.ArrayList;
-
-import rule.superfeature.model.ClassifyModelRule;
-import weka.classifiers.Classifier;
-import weka.classifiers.evaluation.Evaluation;
-import weka.core.Instances;
 import dataconvert.IntermediateData;
 import dataconvert.WekaData;
 import dataconvert.WekaDataSet;
+import rule.superfeature.model.NumericModelRule;
+import weka.classifiers.Classifier;
+import weka.classifiers.evaluation.Evaluation;
+import weka.core.Instance;
+import weka.core.Instances;
 
-public abstract class WekaClassifyModelRule extends ClassifyModelRule implements IWekaModelRule{
+public abstract class WekaNumericModelRule extends NumericModelRule implements IWekaModelRule{
 
 	Classifier classifier;
 	
-	public WekaClassifyModelRule(String featureName, ArrayList<String> aDomain) {
-		super(featureName, aDomain);
-	}	
-	
-	public WekaClassifyModelRule(String featureName, int domainSize) {
-		super(featureName, domainSize);
+	public WekaNumericModelRule(String featureName) {
+		super(featureName);
 	}
-	
-	@Override
-	public Object extract(IntermediateData anInstData) throws Exception {
-		double result = classifier.classifyInstance(((WekaData)anInstData).getInstValue());
-		return domain.get((int)result);
-	}
-	
+
 	@Override
 	public void save(String modelFilePath) throws Exception{
 		weka.core.SerializationHelper.write(modelFilePath, classifier);
@@ -36,6 +25,13 @@ public abstract class WekaClassifyModelRule extends ClassifyModelRule implements
 	@Override
 	public void load(String modelFilePath) throws Exception{
 		classifier = (Classifier) weka.core.SerializationHelper.read(modelFilePath);	
+	}
+	
+	@Override
+	public Object extract(IntermediateData anInstData) throws Exception {
+		Instance inst = ((WekaData)anInstData).getInstValue();
+		double result = classifier.classifyInstance(inst);
+		return result;
 	}
 	
 	

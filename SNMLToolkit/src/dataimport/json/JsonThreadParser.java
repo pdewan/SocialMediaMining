@@ -80,6 +80,9 @@ public class JsonThreadParser {
 						msg.addAttribute(attrName, saveformat.format(date));
 					}
 					break;
+				case(JsonDataConfig.JSON):
+					msg.addAttribute(attrName, s);
+					break;
 				default:
 					break;
 				}
@@ -149,6 +152,7 @@ public class JsonThreadParser {
 		}
 		
 		ThreadDataSet threadSet = new ThreadDataSet();
+		threadSet.addThreadData(null);
 		parseDirectory(dirfile, threadSet);
 		
 		return threadSet;
@@ -170,7 +174,10 @@ public class JsonThreadParser {
 				continue;
 			}
 			//System.out.println("parsing "+files[i].getName());
-			threadSet.setThreadData(threadSet.size(), parseSingleFile(files[i]));
+			ThreadData thread = parseSingleFile(files[i]);
+			int id = threadSet.size();
+			thread.setThreadId(id);
+			threadSet.setThreadData(id, thread);
 		}
 	}
 

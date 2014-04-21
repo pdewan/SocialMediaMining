@@ -37,6 +37,10 @@ public class WekaData implements IntermediateData {
 			int attrIndex,
 			Object val) {		
 		
+		if(val instanceof Integer){
+			val = ((Integer)val).doubleValue();
+		}
+		
 		if(val instanceof Double){		
 			inst.setValue(((WekaDataSet)dataset).attribute(attrIndex), (Double)val);
 			attrIndex++;	

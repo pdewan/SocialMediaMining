@@ -2,7 +2,6 @@ package rule.superfeature.model.mallet;
 
 import java.io.File;
 
-import cc.mallet.topics.ParallelTopicModel;
 import cc.mallet.topics.SimpleLDA;
 import dataconvert.IntermediateData;
 import dataconvert.IntermediateDataSet;
