@@ -12,10 +12,26 @@ import weka.core.Attribute;
 import weka.core.Instances;
 import dataimport.MsgDataConfig;
 
+/**
+ * Implementation of intermediate data set initializer for Weka intermediate dataset
+ *
+ * @author Jinjing Ma (jinjingm@cs.unc.edu)
+ * @version $1$
+ */
 public class WekaDataSetInitializer implements IntermediateDataSetInitializer {
 	
+	/** Attribute number of the Weka dataset to be created */
 	protected int attrNum;
 
+	/**
+	   * Create an Weka intermediate dataset with given name, instance number,
+	   * and define the attributes with feature extracting rules.
+	   *
+	   * @param destDataSetName the name of created dataset
+	   * @param threadNum the number of instances in the dataset
+	   * @param rules the array of feature extracting rules used in feature extractor
+	   * @throws Exception if data set creation fails
+	   */
 	@Override
 	public IntermediateDataSet initDestDataSet(String destDataSetName,
 			int threadNum, IFeatureRule[] rules) throws Exception {
@@ -65,6 +81,14 @@ public class WekaDataSetInitializer implements IntermediateDataSetInitializer {
 		return new WekaDataSet(dataset);
 	}
 
+	/**
+	   * Create an Weka intermediate data instance in given dataset.
+	   * The attributes are defined by feature extracting rules.
+	   *
+	   * @param relatedDataset the dataset which contains the created instance
+	   * @param rules the array of feature extracting rules used in feature extractor
+	   * @throws Exception if data creation fails
+	   */
 	@Override
 	public IntermediateData initADataInstance(
 			IntermediateDataSet relatedDataset, IFeatureRule[] rules)

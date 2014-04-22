@@ -1,11 +1,8 @@
 package dataimport.json;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map.Entry;
@@ -13,36 +10,69 @@ import java.util.Map.Entry;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import dataconvert.IntermediateData;
 import dataimport.MessageData;
 import dataimport.MsgDataConfig;
 import dataimport.ThreadData;
 import dataimport.ThreadDataSet;
-import weka.core.Attribute;
-import weka.core.Instances;
 
+/**
+ * An data parser for JSON-format files.
+ *
+ * @author Jinjing Ma (jinjingm@cs.unc.edu)
+ * @version $1$
+ */
 public class JsonThreadParser {
 	
+	/** data configure of the start message (like question) */
 	static JsonDataConfig STARTMSGCONFIG;
+	
+	/** data configure of follow messages (like answers) */
 	static JsonDataConfig FOLLOWMSGCONFIG;
+	
+	/** date field used to sort messages*/
 	protected static String keyDateAttrName = "Date";
 	
-	//User should call this constructor if there are >=1 attributes are date format string
-	//Or the date attribute's name is not "Date"
-	public JsonThreadParser(JsonDataConfig startMsgConfig, JsonDataConfig followMsgConfig, String keyDateAttrName){
+	
+	/**
+	   * Create the JSON-format data parser when >=1 fields are date format string,
+	   * or the only date attribute's name is not "Date"
+	   * 
+	   * @param startMsgConfig data configure of the start message
+	   * @param followMsgConfig data configure of follow messages
+	   * @param keyDateAttrName the name of date field to sort messages
+	   */
+	public JsonThreadParser(JsonDataConfig startMsgConfig, 
+			JsonDataConfig followMsgConfig, String keyDateAttrName){
 		STARTMSGCONFIG = startMsgConfig;
 		FOLLOWMSGCONFIG = followMsgConfig;
 		JsonThreadParser.keyDateAttrName = keyDateAttrName;
 	}
 	
+
+	/**
+	   * Create the JSON-format data parser the only date attribute has name "Date".
+	   * 
+	   * @param startMsgConfig data configure of the start message
+	   * @param followMsgConfig data configure of follow messages
+	   */
 	public JsonThreadParser(JsonDataConfig startMsgConfig, JsonDataConfig followMsgConfig){
 		STARTMSGCONFIG = startMsgConfig;
 		FOLLOWMSGCONFIG = followMsgConfig;
 		JsonThreadParser.keyDateAttrName = "Date";
 	}
 	
-	
-	protected static void parseMsgObject(JSONObject json, ThreadData thread, JsonDataConfig config) throws Exception{
+	/**
+	   * Parse a JSONObject (containing info of a single message) into 
+	   * a message data with given config, then put into a thread data. 
+	   * 
+	   * @param json the input JSONObject
+	   * @param thread the thread data saving the parsed message
+	   * @param config the corresponding data config for the message,
+	   * 		should be eigher a start message config or follow msg config
+	   * @throws Exception when error occurs in parsing the JSONObject
+	   */
+	protected static void parseMsgObject(JSONObject json, 
+			ThreadData thread, JsonDataConfig config) throws Exception{
 		
 		MessageData msg = new MessageData();
 		
@@ -115,8 +145,13 @@ public class JsonThreadParser {
 		thread.addMsgData(msg);		
 	}
 	
-	public ThreadData parseSingleFile(
-			File jsonfile) throws Exception{
+	/**
+	   * Parse a JSONObject (containing info of a thread) into a thread data. 
+	   * 
+	   * @param jsonfile the input JSON file containing info of a thread 
+	   * @throws Exception when error occurs in parsing the JSON files
+	   */
+	public ThreadData parseSingleFile(File jsonfile) throws Exception{
 		
 		BufferedReader reader = new BufferedReader(new FileReader(jsonfile));
 		StringBuilder sb = new StringBuilder();
@@ -144,8 +179,15 @@ public class JsonThreadParser {
 		return thread;	
 	}
 	
-	public ThreadDataSet parseDirectory(
-			File dirfile) throws Exception{
+	/**
+	   * Parse a directory of JSON files (containing info of a thread) into 
+	   * a thread dataset.  
+	   * 
+	   * @param dirfile the directory of input JSON files containing thread info
+	   * @return the output thread dataset
+	   * @throws Exception when error occurs in reading/parsing the JSON files
+	   */
+	public ThreadDataSet parseDirectory(File dirfile) throws Exception{
 		
 		if(!dirfile.isDirectory()){
 			throw new Exception(dirfile.getAbsolutePath() + " suppose to be a directory");
@@ -158,8 +200,17 @@ public class JsonThreadParser {
 		return threadSet;
 	}
 	
-	protected void parseDirectory(
-			File dirfile, ThreadDataSet threadSet) throws Exception{
+	/**
+	   * Parse a directory of JSON files (containing info of a thread) into 
+	   * a thread dataset. It is called recursively to parse directory in 
+	   * directory files 
+	   * 
+	   * @param dirfile the directory of input JSON files containing thread info
+	   * 		or other directories
+	   * @param the output thread dataset
+	   * @throws Exception when error occurs in reading/parsing the JSON files
+	   */
+	protected void parseDirectory(File dirfile, ThreadDataSet threadSet) throws Exception{
 		
 		if(!dirfile.isDirectory()){
 			throw new Exception(dirfile.getAbsolutePath() + " suppose to be a directory");

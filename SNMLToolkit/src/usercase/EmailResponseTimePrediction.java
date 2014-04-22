@@ -38,9 +38,11 @@ public class EmailResponseTimePrediction {
 		ThreadDataFilter filter = new ThreadDataFilter();
 		ThreadDataSet dataset2 = filter.filt(dataset1, filterRule);
 				
+		int addressNum = 170;
+		
 		IBasicFeatureRule[] basicRules = new IBasicFeatureRule[4];
-		basicRules[0] = new EmailSenderIdRule("senderId", 170);
-		basicRules[1] = new EmailRecipientIdsRule("recipient", 170);
+		basicRules[0] = new EmailSenderIdRule("senderId", addressNum);
+		basicRules[1] = new EmailRecipientIdsRule("recipient", addressNum);
 		basicRules[2] = new EmailSubjectLengthRule("subjectLength");
 		basicRules[3] = new EmailRecipientNumRule("recipientNum");
 		
