@@ -1,6 +1,11 @@
 package dataimport.json.yahooanswers;
 
-
+/**
+ * Define fields name/type of YahooAnswers question.
+ *
+ * @author Jinjing Ma (jinjingm@cs.unc.edu)
+ * @version $1$
+ */
 public class YahooAnswersQuestionConfig extends YahooAnswersDataConfig{	
 	
 	public static String ID 				= "id";

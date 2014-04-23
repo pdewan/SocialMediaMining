@@ -1,6 +1,12 @@
 package rule;
 
-public abstract class FeatureRule {
+/**
+ * Abstract, superclass of all feature extracting rules
+ *
+ * @author Jinjing Ma (jinjingm@cs.unc.edu)
+ * @version $1$
+ */
+public abstract class FeatureRule implements IFeatureRule {
 	
 	protected String destFeatureName;	
 	

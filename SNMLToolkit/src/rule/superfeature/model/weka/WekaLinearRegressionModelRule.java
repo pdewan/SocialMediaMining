@@ -6,7 +6,7 @@ import weka.core.Instances;
 import dataconvert.IntermediateDataSet;
 import dataconvert.WekaDataSet;
 
-public class WekaLinearRegressionModelRule extends WekaNumericModelRule implements IWekaModelRule{
+public class WekaLinearRegressionModelRule extends WekaRegressionModelRule implements IWekaModelRule{
 
 	public WekaLinearRegressionModelRule(String featureName) {
 		super(featureName);

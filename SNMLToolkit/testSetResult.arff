@@ -1,0 +1,13 @@
+@relation test2
+
+@attribute hasAnswerJ48 {y,n}
+
+@data
+n
+y
+y
+y
+y
+n
+y
+y

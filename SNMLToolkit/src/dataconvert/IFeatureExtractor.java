@@ -11,7 +11,7 @@ package dataconvert;
 public abstract class IFeatureExtractor {
 	
 	/** An initializer for output dataset */
-	protected IntermediateDataSetInitializer destDatasetInit;
+	protected IntermediateDataInitializer destDatasetInit;
 	
 	/**
 	   * Initialize an feature extractor with a given output 
@@ -19,7 +19,7 @@ public abstract class IFeatureExtractor {
 	   * 
 	   * @param init the initializer of output dataset
 	   */
-	public IFeatureExtractor(IntermediateDataSetInitializer init){
+	public IFeatureExtractor(IntermediateDataInitializer init){
 		destDatasetInit = init;
 	}
 

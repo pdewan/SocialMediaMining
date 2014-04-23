@@ -1,5 +1,11 @@
 package rule;
 
+/**
+ * Abstract, superclass of all rules extracting numeric features
+ *
+ * @author Jinjing Ma (jinjingm@cs.unc.edu)
+ * @version $1$
+ */
 public abstract class NumericFeatureRule extends FeatureRule {
 
 	public NumericFeatureRule(String destFeatureName) {

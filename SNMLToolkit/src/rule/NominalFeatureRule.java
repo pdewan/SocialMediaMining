@@ -2,6 +2,12 @@ package rule;
 
 import java.util.ArrayList;
 
+/**
+ * Abstract, superclass of all rules extracting nominal features
+ *
+ * @author Jinjing Ma (jinjingm@cs.unc.edu)
+ * @version $1$
+ */
 public abstract class NominalFeatureRule extends FeatureRule {
 
 	protected ArrayList<String> domain;

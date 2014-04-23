@@ -2,6 +2,13 @@ package rule;
 
 import java.lang.reflect.Array;
 
+/**
+ * Abstract, superclass of all rules extracting an array 
+ * of numeric features
+ *
+ * @author Jinjing Ma (jinjingm@cs.unc.edu)
+ * @version $1$
+ */
 public class NumericVectorFeatureRule extends FeatureRule {
 
 public int length = 0;

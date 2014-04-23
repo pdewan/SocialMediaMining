@@ -18,7 +18,7 @@ public class SuperFeatureExtractor extends IFeatureExtractor{
 	   * 
 	   * @param init the initializer of output dataset
 	   */
-	public SuperFeatureExtractor(IntermediateDataSetInitializer init) {
+	public SuperFeatureExtractor(IntermediateDataInitializer init) {
 		super(init);
 	}
 

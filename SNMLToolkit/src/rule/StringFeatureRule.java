@@ -1,5 +1,11 @@
 package rule;
 
+/**
+ * Abstract, superclass of all rules extracting string features
+ *
+ * @author Jinjing Ma (jinjingm@cs.unc.edu)
+ * @version $1$
+ */
 public class StringFeatureRule extends FeatureRule {
 
 	public StringFeatureRule(String destFeatureName) {

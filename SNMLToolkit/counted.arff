@@ -1,0 +1,10 @@
+@relation test
+
+@attribute wordnum numeric
+
+@data
+167
+173
+110
+74
+131

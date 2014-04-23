@@ -17,6 +17,7 @@ import dataimport.ThreadDataSet;
 
 /**
  * An data parser for JSON-format files.
+ * Each file should contain a thread/conversation.
  *
  * @author Jinjing Ma (jinjingm@cs.unc.edu)
  * @version $1$

@@ -3,6 +3,12 @@ package rule;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+/**
+ * Superclass of all rules extracting date-type features
+ *
+ * @author Jinjing Ma (jinjingm@cs.unc.edu)
+ * @version $1$
+ */
 public class DateFeatureRule extends FeatureRule {
 	
 	String dateFormat;

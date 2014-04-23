@@ -1,5 +1,11 @@
 package rule;
 
+/**
+ * Basic interface of all feature extracting rules
+ *
+ * @author Jinjing Ma (jinjingm@cs.unc.edu)
+ * @version $1$
+ */
 public interface IFeatureRule {
 
 	public String getDestFeatureName();

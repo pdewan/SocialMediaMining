@@ -20,7 +20,7 @@ public class BasicFeatureExtractor extends IFeatureExtractor{
 	   * 
 	   * @param init the initializer of output dataset
 	   */
-	public BasicFeatureExtractor(IntermediateDataSetInitializer init) {
+	public BasicFeatureExtractor(IntermediateDataInitializer init) {
 		super(init);
 	}
 	

@@ -1,0 +1,20 @@
+@relation test1
+
+@attribute ContentTopic0 numeric
+@attribute ContentTopic1 numeric
+@attribute ContentTopic2 numeric
+@attribute ContentTopic3 numeric
+@attribute ContentTopic4 numeric
+@attribute hasPronoun {y,n}
+@attribute hasAnswer {y,n}
+
+@data
+0.2,0.2,0.2,0.2,0.2,y,y
+0.009524,0.638095,0.333333,0.009524,0.009524,y,n
+0.02,0.68,0.24,0.02,0.04,y,n
+0.013158,0.556579,0.403947,0.025,0.001316,n,y
+0.025,0.65,0.275,0.025,0.025,y,y
+0.008696,0.704348,0.269565,0.008696,0.008696,n,y
+0.004545,0.609091,0.372727,0.004545,0.009091,y,y
+0.003333,0.716667,0.273333,0.003333,0.003333,n,y
+0.002941,0.670588,0.317647,0.005882,0.002941,n,n

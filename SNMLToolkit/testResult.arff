@@ -1,0 +1,18 @@
+@relation mid1
+
+@attribute ContentTopic0 numeric
+@attribute ContentTopic1 numeric
+@attribute ContentTopic2 numeric
+@attribute ContentTopic3 numeric
+@attribute ContentTopic4 numeric
+
+@data
+?
+?
+?
+?
+?
+?
+?
+?
+?

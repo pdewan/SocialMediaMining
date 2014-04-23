@@ -2,6 +2,12 @@ package dataimport.json.yahooanswers;
 
 import dataimport.json.JsonDataConfig;
 
+/**
+ * Define common fields name/type of YahooAnswers data.
+ *
+ * @author Jinjing Ma (jinjingm@cs.unc.edu)
+ * @version $1$
+ */
 public abstract class YahooAnswersDataConfig extends JsonDataConfig{
 	
 	public static String CONTENT 			= "Content";
