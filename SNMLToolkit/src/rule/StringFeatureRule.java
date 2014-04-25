@@ -8,10 +8,22 @@ package rule;
  */
 public class StringFeatureRule extends FeatureRule {
 
+	/**
+	   * Create a string feature extracting rule
+	   * Initialize name for extracted feature
+	   * 
+	   * @param destFeatureName name for extracted feature
+	   */
 	public StringFeatureRule(String destFeatureName) {
 		super(destFeatureName);
 	}
 
+	/**
+	 * Check if an object is string
+	 * 
+	 * @param val object value
+	 * @throws Exception when object value is not valid
+	 */
 	@Override
 	public void checkValid(Object val) throws Exception {
 		if(val==null) return;

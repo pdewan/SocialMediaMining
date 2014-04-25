@@ -11,14 +11,26 @@ import java.text.SimpleDateFormat;
  */
 public class DateFeatureRule extends FeatureRule {
 	
+	/** date formate of this feature */
 	String dateFormat;
 
+	/**
+	   * Create an date feature extracting rule
+	   * Initialize date feature
+	   * 
+	   * @param destFeatureName name for extracted feature
+	   * @param dateFormat formate of date it process
+	   */
 	public DateFeatureRule(String destFeatureName, String dateFormat) {
 		super(destFeatureName);
 		this.dateFormat = dateFormat;
 	}
 
-
+	/**
+	   * Check if a date value is in this rule's format
+	   *
+	   * @param val a string value of date
+	   */
 	@Override
 	public void checkValid(Object val) throws Exception{
 		if(val==null) return;

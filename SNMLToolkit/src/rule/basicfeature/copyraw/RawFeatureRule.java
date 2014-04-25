@@ -5,14 +5,37 @@ import rule.basicfeature.IBasicFeatureRule;
 import dataimport.MessageData;
 import dataimport.ThreadData;
 
-public class RawFeatureRule extends FeatureRule implements IBasicFeatureRule{	
+/**
+ * Copy an attribute from message in thread data as feature
+ *
+ * @author Jinjing Ma (jinjingm@cs.unc.edu)
+ * @version $1$
+ */
+public class RawFeatureRule extends FeatureRule implements IBasicFeatureRule{
+	/** k th message */
 	protected int k;
+	
+	/** indicate message in earliest-first or latest-first order */	
 	protected int inOrder;
+	
+	/** name of attribute to copy */
 	protected String attrName;
 	
+	/** earliest-first order */
 	public static final int ACCENDING = 0;
+	
+	/** latest-first order */
 	public static final int DECENDING = 1;
 	
+	/**
+	 * Create a feature copying rule
+	 * Initialize listed variables
+	 * 
+	 * @param destFeatureName name for extracted feature
+	 * @param srcAttrName name of attribute to copy
+	 * @param inOrder select message in earlist or latest order
+	 * @param kth select kth message
+	 */
 	public RawFeatureRule(String destFeatureName, 
 			String srcAttrName, 
 			int inOrder, int kth){
@@ -23,15 +46,14 @@ public class RawFeatureRule extends FeatureRule implements IBasicFeatureRule{
 		this.attrName = srcAttrName;
 	}	
 	
-	public boolean isValidForWeka(Object val){	
-		if(!(val!=null && (val instanceof String ||
-				val instanceof Integer ||
-				val instanceof Double))){
-			return false;
-		}
-		return true;
-	}
 
+	/**
+	 * Extracted feature value from a thread data
+	 * 
+	 * @param aThread the source thread data
+	 * @return extracted feature value
+	 * @throws Exception when extracted value is invalid
+	 */
 	@Override
 	public Object extract(ThreadData aThread) throws Exception {
 		MessageData msg; 
@@ -55,6 +77,12 @@ public class RawFeatureRule extends FeatureRule implements IBasicFeatureRule{
 	}
 
 
+	/**
+	 * Check if an object is a valid feature value for corresponding feature rule
+	 * 
+	 * @param val object value
+	 * @throws Exception when object value is not valid
+	 */
 	@Override
 	public void checkValid(Object val) throws Exception {
 	

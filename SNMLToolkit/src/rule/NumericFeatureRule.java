@@ -8,10 +8,22 @@ package rule;
  */
 public abstract class NumericFeatureRule extends FeatureRule {
 
+	/**
+	   * Create a numeric-type feature extracting rule
+	   * Initialize name for extracted feature
+	   * 
+	   * @param destFeatureName name for extracted feature
+	   */
 	public NumericFeatureRule(String destFeatureName) {
 		super(destFeatureName);
 	}
 	
+	/**
+	 * Check if an object is numeric
+	 * 
+	 * @param val object value
+	 * @throws Exception when object value is not valid
+	 */
 	@Override
 	public void checkValid(Object val) throws Exception{
 		if(val==null) return;

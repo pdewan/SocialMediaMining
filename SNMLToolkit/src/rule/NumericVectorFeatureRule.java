@@ -11,14 +11,27 @@ import java.lang.reflect.Array;
  */
 public class NumericVectorFeatureRule extends FeatureRule {
 
-public int length = 0;
+	/** vector length */
+	public int length = 0;
 	
-	//for the same dataset, the rule must return vector with the same length
+	/**
+	 * Create a numeric-type feature extracting rule
+	 * Initialize name for extracted feature, and certain length of feature vector
+	 * 
+	 * @param featureName
+	 * @param l
+	 */
 	public NumericVectorFeatureRule(String featureName, int l){
 		super(featureName);
 		length = l;
 	}
 	
+	/**
+	 * Check if an object is numeric vector with valid length
+	 * 
+	 * @param val object value
+	 * @throws Exception when object value is not valid
+	 */
 	@Override
 	public void checkValid(Object val) throws Exception{
 		/*

@@ -4,12 +4,26 @@ import dataconvert.IntermediateData;
 import rule.NumericVectorFeatureRule;
 import rule.superfeature.ISuperFeatureRule;
 
+/**
+ * Copy numeric vector feature from intermediate data
+ *
+ * @author Jinjing Ma (jinjingm@cs.unc.edu)
+ * @version $1$
+ */
 public class NumericVectorCopySuperFeatureRule 
 	extends NumericVectorFeatureRule  
 	implements ISuperFeatureRule {
 
+	/** name of src feature to be copied */
 	protected String srcAttrName;
 	
+	/**
+	   * Create an numeric vector super feature copying rule
+	   * 
+	   * @param destFeatureName name for extracted feature
+	   * @param srcAttrName name of src feature to be copied 
+	   * @param l length of vector
+	   */
 	public NumericVectorCopySuperFeatureRule(String destFeatureName,
 			String srcAttrName, int length) {
 		super(destFeatureName, length);
@@ -17,7 +31,13 @@ public class NumericVectorCopySuperFeatureRule
 	}
 	
 	
-
+	/**
+	 * Copy nominal vector feature value from an intermediate data instance
+	 * 
+	 * @param anInstData the source intermediate data instance
+	 * @return extracted feature value
+	 * @throws Exception when extracted value is invalid
+	 */
 	@Override
 	public Object extract(IntermediateData anInstData) throws Exception {
 		double[] val = new double[length];
