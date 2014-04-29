@@ -8,19 +8,46 @@ import dataconvert.IntermediateDataSet;
 import dataconvert.WekaData;
 import dataconvert.WekaDataSet;
 
+/**
+ * A K-means model from Weka extracting feature rules
+ *
+ * @author Jinjing Ma (jinjingm@cs.unc.edu)
+ * @version $1$
+ */
 public class WekaKmeansModelRule extends WekaClusterModelRule implements IWekaModelRule{
 	
-	public final static int SIMPLEKMEANS = 0;
-	public final static int FARTHESTFIRST = 1;
+	//public final static int SIMPLEKMEANS = 0;
+	//public final static int FARTHESTFIRST = 1;
 	
+	/**
+	   * Create a kmeans model rule with given feature name and cluster name domain
+	   * 
+	   * @param featureName name for extracted feature
+	   * @param aDomain domain of clusters' names
+	   */
 	public WekaKmeansModelRule(String featureName, ArrayList<String> aDomain) {
 		super(featureName, aDomain);
 	}
 	
-	public WekaKmeansModelRule(String featureName, int clusterOrClassNum) {
-		super(featureName, clusterOrClassNum);		
+	/**
+	   * Create a kmeans model rule with given feature name
+	   * Initialize domain as 1, 2, ..., clusterNum
+	   * 
+	   * @param featureName name for extracted feature
+	   * @param clusterNum number of total clusters
+	   */
+	public WekaKmeansModelRule(String featureName, int clusterNum) {
+		super(featureName, clusterNum);		
 	}
 
+	/**
+	 * Train the model with given training set and options
+	 * Format of options should fit Weka format
+	 * 
+	 * @param trainingSet data to train model
+	 * @param options options of the model
+	 * @throws Exception if training process has error
+	 */
 	@Override
 	public void train(IntermediateDataSet trainingSet, String[] options) throws Exception {
 		/*
@@ -48,28 +75,9 @@ public class WekaKmeansModelRule extends WekaClusterModelRule implements IWekaMo
 	}
 
 
-	@Override
-	public Object extract(IntermediateData anInstData) throws Exception {
-		/*
-		double[] prob = kmeans.distributionForInstance(((WekaData)anInstData).getInstValue());
-		int cluster = 0;
-		double maxProb = 0;
-		for(int i=0; i<prob.length; i++){
-			if(maxProb < prob[i]){
-				maxProb = prob[i];
-				cluster = i;
-			}
-		}
-		*/
-		int cluster = clusterer.clusterInstance(((WekaData)anInstData).getInstValue());
-		return domain.get(cluster);
-	}
+	
 
-	@Override
-	public void evaluate(WekaDataSet train, WekaDataSet test) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	
 	

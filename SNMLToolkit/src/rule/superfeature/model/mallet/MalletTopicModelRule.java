@@ -25,18 +25,43 @@ import cc.mallet.types.InstanceList;
 import dataconvert.IntermediateData;
 import dataconvert.IntermediateDataSet;
 
+/**
+ * Abstract, wrapping topic model from Mallet to extract feature
+ *
+ * @author Jinjing Ma (jinjingm@cs.unc.edu)
+ * @version $1$
+ */
 public abstract class MalletTopicModelRule extends NumericVectorModelRule
 		implements IMalletModelRule {
 
+	/** names of string attributes involved */
 	String[] attrNames;
+	
+	/** Mallet pipe to formulate input string */
 	Pipe pipe;
 	
+	/**
+	 * Initialize name and vector length for extracted feature
+	 * Initialize source attriubte names 
+	 * 
+	 * @param featureName  name for extracted feature
+	 * @param attrNames name of string attributes involved in the model
+	 * @param l number of topics
+	 */
 	public MalletTopicModelRule(String featureName, String[] attrNames, int l) {
 		super(featureName, l);
 		this.attrNames = attrNames;
 		pipe = buildPipe();
 	}
 	
+	
+	/**
+	 * Save the string attribute involved into Mallet instances file
+	 * 
+	 * @param trainingSet training set to be saved
+	 * @return saved path
+	 * @throws Exception if error occurs in writing file
+	 */
 	protected String saveToMalletFormat(IntermediateDataSet trainingSet)
 			throws Exception {
 		
@@ -58,6 +83,13 @@ public abstract class MalletTopicModelRule extends NumericVectorModelRule
 		return path;
 	}
 	
+	/**
+	 * Save string attribute involved into the Mallet instances file
+	 * 
+	 * @param data data to be saved
+	 * @return saved path
+	 * @throws Exception if error occurs in writing file
+	 */
 	protected String saveToMalletFormat(IntermediateData data)
 			throws Exception {
 		
@@ -77,6 +109,14 @@ public abstract class MalletTopicModelRule extends NumericVectorModelRule
 		return path;
 	}
 	
+	/**
+	 * Convert string attribute involved of given intermediate dataset 
+	 * into Mallet instances
+	 * 
+	 * @param dataset dataset to be converted
+	 * @return Mallet instancelist
+	 * @throws Exception if error occurs in converting
+	 */
 	protected InstanceList convert(IntermediateDataSet dataset)
 			throws Exception{
 		
@@ -94,6 +134,14 @@ public abstract class MalletTopicModelRule extends NumericVectorModelRule
         return instances;
 	}
 	
+	/**
+	 * Convert string attribute involved of given intermediate data 
+	 * into Mallet instance
+	 * 
+	 * @param data data to be converted
+	 * @return a Mallet instance
+	 * @throws Exception if error occurs in converting
+	 */
 	protected Instance convert(IntermediateData data)
 			throws Exception{
 		
@@ -111,6 +159,11 @@ public abstract class MalletTopicModelRule extends NumericVectorModelRule
         return instances.get(0);
 	}
 
+	/**
+	 * Built Mallet pipe to convert data
+	 * 
+	 * @return a Mallet pipe
+	 */
 	protected Pipe buildPipe() {
 		ArrayList pipeList = new ArrayList();
 

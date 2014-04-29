@@ -13,19 +13,45 @@ import java.util.Scanner;
 import dataimport.ThreadData;
 import rule.NumericVectorFeatureRule;
 
+/**
+ * Read nominal feature values of a thread set from file, extract as numeric vector value
+ * The format of file should be like:
+ * threadid1	featurevalue
+ * threadid2	featurevalue
+ *
+ * @author Jinjing Ma (jinjingm@cs.unc.edu)
+ * @version $1$
+ */
 public class ReadFromFileNumericVectorRule extends NumericVectorFeatureRule implements IBasicFeatureRule{
 	
+	/** save <threadid, nominal value> */
 	HashMap<Integer, String> attrVals;
+	
+	/** domain of nominal values */
 	ArrayList<String> domain;
 	
-	public ReadFromFileNumericVectorRule(String featureName, String fileName) throws IOException {
-		super(featureName, 0);
+	/**
+	 * Create a ReadFromFileNumericVectorRule
+	 * Read nominal feature values of a thread set from file
+	 * 
+	 * @param destFeatureName name for extracted feature
+	 * @param fileName path of file to read
+	 * @throws IOException if opening or reading operations have exception
+	 */
+	public ReadFromFileNumericVectorRule(String destFeatureName, String fileName) throws IOException {
+		super(destFeatureName, 0);
 		
 		attrVals = new HashMap<Integer, String>();
 		domain = read(fileName);
 		this.length = domain.size(); 
 	}
 	
+	/**
+	 * Read and keep nominal feature values of a thread set from file
+	 * 
+	 * @param fileName path of file to read
+	 * @throws IOException if opening or reading operations have exception
+	 */
 	private ArrayList<String> read(String fileName) throws IOException{
 		HashSet<String> domainSet = new HashSet<String>();
 		
@@ -53,6 +79,13 @@ public class ReadFromFileNumericVectorRule extends NumericVectorFeatureRule impl
 	    return domain;
 	}
 
+	/**
+	 * Get the double array format of nominal feature value of given thread
+	 * 
+	 * @param aThread the source thread data
+	 * @return the double array format of nominal feature value
+	 * @throws Exception when extracted value is invalid
+	 */
 	@Override
 	public Object extract(ThreadData aThread) throws Exception {
 		double[] val = new double[length];

@@ -12,23 +12,38 @@ import cc.mallet.classify.Classifier;
 import dataconvert.IntermediateData;
 import dataconvert.IntermediateDataSet;
 
+/**
+ * Abstract, superclass of all Mallet classify model extracting feature rules
+ *
+ * @author Jinjing Ma (jinjingm@cs.unc.edu)
+ * @version $1$
+ */
 public abstract class MalletClassifyModelRule extends ClassifyModelRule {
 
+	/** Mallet classifier */
 	Classifier classifier;
+	
 	String srcAttrName;
 	
+	/**
+	   * Initialize name and value domain for extracted feature
+	   * Initialize source attriubte name
+	   * 
+	   * @param featureName name for extracted feature
+	   * @param srcAttrName name of source attribute name
+	   * @param aDomain domain of classes' names
+	   */
 	public MalletClassifyModelRule(String featureName, String srcAttrName, ArrayList<String> aDomain) {
 		super(featureName, aDomain);
 		this.srcAttrName = srcAttrName;
 	}
 
-	@Override
-	public void train(IntermediateDataSet trainingSet,  String[] options)
-			throws Exception {
-		// TODO Auto-generated method stub
-
-	}
-
+	/**
+	 * Save trained model to given path in Mallet format
+	 * 
+	 * @param modelFilePath path to save model
+	 * @throws Exception while saving process has error
+	 */
 	@Override
 	public void save(String modelFilePath) throws Exception {
 		File file = new File(modelFilePath);
@@ -40,6 +55,12 @@ public abstract class MalletClassifyModelRule extends ClassifyModelRule {
 
 	}
 
+	/**
+	 * Load trained model from given path in Mallet format
+	 * 
+	 * @param modelFilePath path to load model
+	 * @throws Exception while loading process has error
+	 */
 	@Override
 	public void load(String modelFilePath) throws Exception {
 		File file = new File(modelFilePath);
@@ -48,12 +69,6 @@ public abstract class MalletClassifyModelRule extends ClassifyModelRule {
 	            new ObjectInputStream (new FileInputStream (file));
 	    classifier = (Classifier) ois.readObject();
 	    ois.close();
-	}
-
-	@Override
-	public Object extract(IntermediateData anInstData) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

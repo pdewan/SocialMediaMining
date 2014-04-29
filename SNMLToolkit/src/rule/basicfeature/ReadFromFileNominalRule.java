@@ -13,10 +13,28 @@ import java.util.Scanner;
 import dataimport.ThreadData;
 import rule.NominalFeatureRule;
 
+/**
+ * Read nominal feature values of a thread set from file
+ * The format of file should be like:
+ * threadid1	featurevalue
+ * threadid2	featurevalue
+ *
+ * @author Jinjing Ma (jinjingm@cs.unc.edu)
+ * @version $1$
+ */
 public class ReadFromFileNominalRule extends NominalFeatureRule implements IBasicFeatureRule{
 
+	/** save <threadid, nominal value> */
 	HashMap<Integer, String> attrVals;
-	
+		
+	/**
+	 * Create a ReadFromFileNominalRule
+	 * Read and keep nominal feature values of a thread set from file
+	 * 
+	 * @param destFeatureName name for extracted feature
+	 * @param fileName path of file to read
+	 * @throws IOException if opening or reading operations have exception
+	 */
 	public ReadFromFileNominalRule(String destFeatureName, String fileName) throws IOException {
 		super(destFeatureName);
 		
@@ -25,6 +43,14 @@ public class ReadFromFileNominalRule extends NominalFeatureRule implements IBasi
 		this.setDomain(domain);
 	}
 	
+	
+	/**
+	 * Read and keep nominal feature values of a thread set from file
+	 * 
+	 * @param fileName path of file to read
+	 * @return domain of feature values
+	 * @throws IOException if opening or reading operations have exception
+	 */
 	private ArrayList<String> read(String fileName) throws IOException{
 		HashSet<String> domainSet = new HashSet<String>();
 		
@@ -52,6 +78,13 @@ public class ReadFromFileNominalRule extends NominalFeatureRule implements IBasi
 	    return domain;
 	}
 
+	/**
+	 * Get the nominal feature value of given thread
+	 * 
+	 * @param aThread the source thread data
+	 * @return the nominal feature value of given thread
+	 * @throws Exception when extracted value is invalid
+	 */
 	@Override
 	public Object extract(ThreadData aThread) throws Exception {
 		return attrVals.get(aThread.getThreadId());

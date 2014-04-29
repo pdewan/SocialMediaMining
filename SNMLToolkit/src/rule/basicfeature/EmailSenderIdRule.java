@@ -1,21 +1,37 @@
 package rule.basicfeature;
 
-import java.util.ArrayList;
-
 import dataimport.MessageData;
 import dataimport.ThreadData;
 import dataimport.email.EmailDataConfig;
-import rule.NominalFeatureRule;
 import rule.NumericVectorFeatureRule;
 
+/**
+ * Extract the numeric vector of whether an address appeared as the sender 
+ * of the starting message 
+ *
+ * @author Jinjing Ma (jinjingm@cs.unc.edu)
+ * @version $1$
+ */
 public class EmailSenderIdRule extends NumericVectorFeatureRule implements IBasicFeatureRule{
 
-	
-
+	/**
+	   * Create an binary feature rule for extracting sender id
+	   * 
+	   * @param destFeatureName name for extracted feature
+	   * @param totalRecipientNum largest address id
+	   */
 	public EmailSenderIdRule(String featureName, int largestSenderId) {
 		super(featureName, largestSenderId);
 	}
 
+	/**
+	 * Extract the numeric vector of whether an address appeared as 
+	 * the sender of the starting message of given thread
+	 * 
+	 * @param aThread the source thread data
+	 * @return double array of whether addresses are sender
+	 * @throws Exception when extracted value is invalid
+	 */
 	@Override
 	public Object extract(ThreadData aThread) throws Exception {
 		double[] ids = new double[length];

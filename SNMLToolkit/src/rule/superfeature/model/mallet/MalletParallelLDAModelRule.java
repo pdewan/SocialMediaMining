@@ -9,16 +9,39 @@ import cc.mallet.types.InstanceList;
 import dataconvert.IntermediateData;
 import dataconvert.IntermediateDataSet;
 
-public class MalletParallelLDAModelRule  extends MalletTopicModelRule implements IMalletModelRule{
+/**
+ * Latent Dirichlet Allocation model from Mallet to extract feature
+ *
+ * @author Jinjing Ma (jinjingm@cs.unc.edu)
+ * @version $1$
+ */
+public class MalletParallelLDAModelRule extends MalletTopicModelRule implements IMalletModelRule{
 
+	/**
+	 * Create a feature extracting rule with model LDA
+	 * Initialize name and vector length for extracted feature
+	 * 
+	 * @param featureName  name for extracted feature
+	 * @param attrNames name of string attributes involved in the model
+	 * @param l number of topics
+	 */
 	public MalletParallelLDAModelRule(String featureName, String[] attrNames,
 			int l) {
 		super(featureName, attrNames, l);
 	}
 
+	/** the LDA model */
 	ParallelTopicModel model;
 	
 
+	/**
+	 * Train the LDA model with given training set and options
+	 * Format of options should fit Mallet format
+	 * 
+	 * @param trainingSet data to train model
+	 * @param options options of the model
+	 * @throws Exception if training process has error
+	 */
 	@Override
 	public void train(IntermediateDataSet trainingSet, String[] options)
 			throws Exception {
@@ -40,11 +63,16 @@ public class MalletParallelLDAModelRule  extends MalletTopicModelRule implements
         // Run the model for 50 iterations and stop (this is for testing only, 
         //  for real applications, use 1000 to 2000 iterations)
         model.setNumIterations(50);
-        model.estimate();
-        
+        model.estimate();       
         
 	}
 
+	/**
+	 * Save trained LDA model to given path in Mallet format
+	 * 
+	 * @param modelFilePath path to save model
+	 * @throws Exception while saving process has error
+	 */
 	@Override
 	public void save(String modelFilePath) throws Exception {
 		File file = new File(modelFilePath);
@@ -55,13 +83,26 @@ public class MalletParallelLDAModelRule  extends MalletTopicModelRule implements
 	}
 	
 	
-
+	/**
+	 * Load trained LDA model from given path in Mallet format
+	 * 
+	 * @param modelFilePath path to load model
+	 * @throws Exception while loading process has error
+	 */
 	@Override
 	public void load(String modelFilePath) throws Exception {
 		File file = new File(modelFilePath);	
 		model = ParallelTopicModel.read(file);
 	}
 
+	/**
+	 * Calculate the distribution over trained topics of given intermediate data 
+	 * instance
+	 * 
+	 * @param anInstData the source intermediate data instance
+	 * @return distribution over trained topics
+	 * @throws Exception when extracted value is invalid
+	 */
 	@Override
 	public Object extract(IntermediateData anInstData) throws Exception {
 

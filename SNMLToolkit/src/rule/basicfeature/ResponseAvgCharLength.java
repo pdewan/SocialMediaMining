@@ -4,15 +4,38 @@ import dataimport.MessageData;
 import dataimport.ThreadData;
 import rule.NumericFeatureRule;
 
+/**
+ * Extract the average char-length of given string attribute of the response
+ * messages in a thread
+ *
+ * @author Jinjing Ma (jinjingm@cs.unc.edu)
+ * @version $1$
+ */
 public class ResponseAvgCharLength extends NumericFeatureRule implements IBasicFeatureRule{
 
+	/** attribute name */
 	String field;
 	
+	/**
+	   * Create an ResponseAvgCharLength
+	   * 
+	   * @param destFeatureName name for extracted feature
+	   * @param responseField name of string attribute to count length
+	   */
 	public ResponseAvgCharLength(String destFeatureName, String responseField) {
 		super(destFeatureName);
 		this.field = responseField;
 	}
 
+	/**
+	 * Extract the average char-length of given string attribute of the response
+	 * messages in given thread
+	 * 
+	 * @param aThread the source thread data
+	 * @return the average char-length of given string attribute of 
+	 * 			the response messages
+	 * @throws Exception when extracted value is invalid
+	 */
 	@Override
 	public Object extract(ThreadData aThread) throws Exception {
 		int length = 0;
